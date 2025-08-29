@@ -1,21 +1,17 @@
+"use client";
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import { Zap, Book, Crosshair } from "lucide-react";
+import { GoogleMapComponent } from "@/components/dashboard/google-map";
 
 export default function DashboardPage() {
   return (
     <div className="flex justify-center items-start">
         <Card className="w-full max-w-lg rounded-xl shadow-lg overflow-hidden">
         <CardContent className="p-4 space-y-4">
-            <div className="relative rounded-lg overflow-hidden">
-                <Image
-                    src="https://storage.googleapis.com/coastal-guardian-4o2v3.appspot.com/map_placeholder.png"
-                    width={800}
-                    height={450}
-                    alt="Map with threat levels"
-                    className="w-full object-cover"
-                />
+            <div className="relative rounded-lg overflow-hidden aspect-video">
+                <GoogleMapComponent />
                 <div className="absolute top-2 right-2 bg-black/50 backdrop-blur-sm rounded-full p-1 px-3 flex items-center space-x-4 text-white text-xs">
                     <div className="flex items-center space-x-1">
                         <span className="h-2 w-2 rounded-full bg-green-500"></span>

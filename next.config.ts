@@ -36,6 +36,9 @@ const nextConfig: NextConfig = {
       }
     ],
   },
+  env: {
+    NEXT_PUBLIC_MAPS_API_KEY: process.env.MAPS_API_KEY,
+  }
 };
 
 export default nextConfig;
