@@ -11,12 +11,12 @@ export default function AuthLayout({
     <div className="flex min-h-screen w-full flex-col items-center justify-center bg-background p-4">
       <div className="absolute inset-0 -z-10">
         <Image
-          src="https://storage.googleapis.com/project-os-prod/images/a2a68571-4357-4591-92e9-46761a23864a.jpg"
-          alt="Forest canopy background"
+          src="https://picsum.photos/1920/1080"
+          alt="Coastal background"
           fill
           style={{ objectFit: 'cover' }}
           className="opacity-20"
-          data-ai-hint="forest trees"
+          data-ai-hint="coastline aerial"
         />
         <div className="absolute inset-0 bg-background/60 backdrop-blur-lg"></div>
       </div>
