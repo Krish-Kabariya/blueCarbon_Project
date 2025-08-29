@@ -18,7 +18,7 @@ export default function AuthLayout({
           className="opacity-20"
           data-ai-hint="ocean coast"
         />
-        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+        <div className="absolute inset-0 bg-background/60 backdrop-blur-lg"></div>
       </div>
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">

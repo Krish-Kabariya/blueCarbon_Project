@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 
 export default function LoginPage() {
   return (
-    <Card>
+    <Card className="bg-card/50 border border-white/20 shadow-lg">
       <CardHeader>
         <CardTitle className="text-2xl">Login</CardTitle>
         <CardDescription>Enter your credentials to access your account.</CardDescription>
