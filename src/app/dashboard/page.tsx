@@ -2,7 +2,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Zap, Book, Crosshair, Map, Bell, FileText } from "lucide-react";
 import { GoogleMapComponent } from "@/components/dashboard/google-map";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -14,6 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge";
+import { Map, Bell, FileText } from "lucide-react";
 
 
 const alerts = [
@@ -44,22 +44,6 @@ const alerts = [
 export default function DashboardPage() {
   return (
     <div className="space-y-6">
-       <Card className="w-full rounded-xl shadow-lg overflow-hidden">
-        <CardHeader>
-            <div className="flex justify-between items-start">
-                <div>
-                    <h2 className="text-sm font-bold uppercase text-destructive">High Alert:</h2>
-                    <p className="text-lg font-semibold text-foreground mt-1">
-                        Hurricane approaching Eastern Seaboard. Seek shelter immediately.
-                    </p>
-                </div>
-                <Button variant="destructive" className="ml-4">
-                    View Details
-                </Button>
-            </div>
-        </CardHeader>
-      </Card>
-
       <Tabs defaultValue="map" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="map"><Map className="mr-2" /> Map View</TabsTrigger>
@@ -72,20 +56,6 @@ export default function DashboardPage() {
             <CardContent className="p-0">
                <div className="relative rounded-lg overflow-hidden aspect-video">
                   <GoogleMapComponent />
-                  <div className="absolute top-2 right-2 bg-black/50 backdrop-blur-sm rounded-full p-1 px-3 flex items-center space-x-4 text-white text-xs">
-                      <div className="flex items-center space-x-1">
-                          <span className="h-2 w-2 rounded-full bg-green-500"></span>
-                          <span>Low</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                          <span className="h-2 w-2 rounded-full bg-yellow-500"></span>
-                          <span>Moderate</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                          <span className="h-2 w-2 rounded-full bg-red-500"></span>
-                          <span>High</span>
-                      </div>
-                  </div>
               </div>
             </CardContent>
           </Card>
@@ -117,7 +87,7 @@ export default function DashboardPage() {
                         <Badge variant={
                             alert.severity === "High" ? "destructive" :
                             alert.severity === "Medium" ? "secondary" : "default"
-                        } className={alert.severity === "Medium" ? "bg-yellow-500 text-black" : alert.severity === "Low" ? "bg-green-500 text-white" : ""}>
+                        }>
                             {alert.severity}
                         </Badge>
                       </TableCell>
