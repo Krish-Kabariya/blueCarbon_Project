@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ShieldHalf } from 'lucide-react';
 
 export default function AuthLayout({
   children,
@@ -23,8 +22,7 @@ export default function AuthLayout({
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
             <Link href="/" className="flex items-center justify-center gap-3">
-                <ShieldHalf className="h-8 w-8 text-primary" />
-                <h1 className="text-3xl font-bold text-primary">Coastal Guardian</h1>
+                <h1 className="text-3xl font-bold text-primary">CoastalWatch</h1>
             </Link>
             <p className="mt-2 text-muted-foreground">Your shield for coastal ecosystems.</p>
         </div>

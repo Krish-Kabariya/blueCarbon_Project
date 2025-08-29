@@ -12,7 +12,7 @@ import {
   SidebarInset,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { Home, Bell, BookOpen, Megaphone, LifeBuoy, BarChart, LogOut, ShieldHalf } from "lucide-react";
+import { Home, Bell, BookOpen, Megaphone, LifeBuoy, BarChart, LogOut, Menu } from "lucide-react";
 import Link from 'next/link';
 
 export default function DashboardLayout({
@@ -22,14 +22,11 @@ export default function DashboardLayout({
 }) {
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen">
+      <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900">
         <Sidebar>
           <SidebarHeader>
             <div className="flex items-center gap-3 p-2">
-              <ShieldHalf className="h-8 w-8 text-sidebar-primary" />
-              <div className="flex flex-col">
-                <h1 className="text-xl font-semibold text-sidebar-foreground">Coastal Guardian</h1>
-              </div>
+              <h1 className="text-xl font-semibold text-sidebar-foreground">CoastalWatch</h1>
             </div>
           </SidebarHeader>
           <SidebarContent>
@@ -88,7 +85,7 @@ export default function DashboardLayout({
             <div className="flex items-center gap-3 p-2">
               <Avatar className="h-9 w-9">
                 <AvatarImage src="https://picsum.photos/100/100" data-ai-hint="profile picture" />
-                <AvatarFallback>CG</AvatarFallback>
+                <AvatarFallback>CW</AvatarFallback>
               </Avatar>
               <div className="flex flex-col overflow-hidden">
                 <span className="truncate font-semibold">Community Member</span>
@@ -103,11 +100,13 @@ export default function DashboardLayout({
           </SidebarFooter>
         </Sidebar>
         <SidebarInset>
-          <header className="sticky top-0 z-20 flex h-14 items-center gap-4 border-b bg-card/80 px-4 backdrop-blur-sm md:px-6">
-            <SidebarTrigger className="md:hidden" />
-            <h1 className="text-lg font-semibold md:text-xl">Dashboard</h1>
+           <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b bg-card/80 px-4 backdrop-blur-sm md:px-6">
+            <h1 className="text-2xl font-bold text-foreground">CoastalWatch</h1>
+            <SidebarTrigger>
+                <Menu />
+            </SidebarTrigger>
           </header>
-          <main className="flex-1 overflow-auto bg-background/50 p-4 md:p-6">
+          <main className="flex-1 overflow-auto p-4 md:p-6">
             {children}
           </main>
         </SidebarInset>
