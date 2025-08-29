@@ -73,7 +73,7 @@ export default function DashboardLayout({
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild tooltip="Data">
-                   <Link href="#">
+                   <Link href="/dashboard/data-visualization">
                     <BarChart />
                     <span>Data Visualization</span>
                   </Link>

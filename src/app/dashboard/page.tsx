@@ -1,63 +1,155 @@
 "use client";
 
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Zap, Book, Crosshair } from "lucide-react";
+import { Zap, Book, Crosshair, Map, Bell, FileText } from "lucide-react";
 import { GoogleMapComponent } from "@/components/dashboard/google-map";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+import { Badge } from "@/components/ui/badge";
+
+
+const alerts = [
+  {
+    id: "ALERT-001",
+    severity: "High",
+    type: "Storm Surge",
+    location: "East Coast",
+    timestamp: "2024-07-29 14:30 UTC",
+  },
+  {
+    id: "ALERT-002",
+    severity: "Medium",
+    type: "High Tides",
+    location: "West Coast",
+    timestamp: "2024-07-29 11:00 UTC",
+  },
+  {
+    id: "ALERT-003",
+    severity: "Low",
+    type: "Pollution",
+    location: "Gulf Coast",
+    timestamp: "2024-07-28 09:15 UTC",
+  },
+];
+
 
 export default function DashboardPage() {
   return (
-    <div className="flex justify-center items-start">
-        <Card className="w-full max-w-lg rounded-xl shadow-lg overflow-hidden">
-        <CardContent className="p-4 space-y-4">
-            <div className="relative rounded-lg overflow-hidden aspect-video">
-                <GoogleMapComponent />
-                <div className="absolute top-2 right-2 bg-black/50 backdrop-blur-sm rounded-full p-1 px-3 flex items-center space-x-4 text-white text-xs">
-                    <div className="flex items-center space-x-1">
-                        <span className="h-2 w-2 rounded-full bg-green-500"></span>
-                        <span>Low</span>
-                    </div>
-                     <div className="flex items-center space-x-1">
-                        <span className="h-2 w-2 rounded-full bg-yellow-500"></span>
-                        <span>Moderate</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                        <span className="h-2 w-2 rounded-full bg-red-500"></span>
-                        <span>High</span>
-                    </div>
+    <div className="space-y-6">
+       <Card className="w-full rounded-xl shadow-lg overflow-hidden">
+        <CardHeader>
+            <div className="flex justify-between items-start">
+                <div>
+                    <h2 className="text-sm font-bold uppercase text-destructive">High Alert:</h2>
+                    <p className="text-lg font-semibold text-foreground mt-1">
+                        Hurricane approaching Eastern Seaboard. Seek shelter immediately.
+                    </p>
                 </div>
+                <Button variant="destructive" className="ml-4">
+                    View Details
+                </Button>
             </div>
+        </CardHeader>
+      </Card>
 
-            <div className="p-4 bg-card rounded-lg">
-                <div className="flex justify-between items-start">
-                    <div>
-                        <h2 className="text-sm font-bold uppercase text-red-600">High Alert:</h2>
-                        <p className="text-lg font-semibold text-foreground mt-1">
-                            Hurricane approaching Eastern Seaboard. Seek shelter immediately.
-                        </p>
-                    </div>
-                    <Button variant="default" className="bg-gray-800 text-white hover:bg-gray-700 ml-4">
-                        View Details
-                    </Button>
+      <Tabs defaultValue="map" className="w-full">
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="map"><Map className="mr-2" /> Map View</TabsTrigger>
+          <TabsTrigger value="alerts"><Bell className="mr-2" /> Alerts & Notifications</TabsTrigger>
+          <TabsTrigger value="reports"><FileText className="mr-2" /> Reports & Logs</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="map">
+          <Card className="mt-4">
+            <CardContent className="p-0">
+               <div className="relative rounded-lg overflow-hidden aspect-video">
+                  <GoogleMapComponent />
+                  <div className="absolute top-2 right-2 bg-black/50 backdrop-blur-sm rounded-full p-1 px-3 flex items-center space-x-4 text-white text-xs">
+                      <div className="flex items-center space-x-1">
+                          <span className="h-2 w-2 rounded-full bg-green-500"></span>
+                          <span>Low</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                          <span className="h-2 w-2 rounded-full bg-yellow-500"></span>
+                          <span>Moderate</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                          <span className="h-2 w-2 rounded-full bg-red-500"></span>
+                          <span>High</span>
+                      </div>
+                  </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="alerts">
+          <Card className="mt-4">
+            <CardHeader>
+              <CardTitle>Recent Alerts</CardTitle>
+              <CardDescription>
+                Live updates on coastal threats.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Severity</TableHead>
+                    <TableHead>Type</TableHead>
+                    <TableHead>Location</TableHead>
+                    <TableHead>Timestamp</TableHead>
+                    <TableHead className="text-right">Action</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {alerts.map((alert) => (
+                    <TableRow key={alert.id}>
+                      <TableCell>
+                        <Badge variant={
+                            alert.severity === "High" ? "destructive" :
+                            alert.severity === "Medium" ? "secondary" : "default"
+                        } className={alert.severity === "Medium" ? "bg-yellow-500 text-black" : alert.severity === "Low" ? "bg-green-500 text-white" : ""}>
+                            {alert.severity}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>{alert.type}</TableCell>
+                      <TableCell>{alert.location}</TableCell>
+                      <TableCell>{alert.timestamp}</TableCell>
+                      <TableCell className="text-right">
+                        <Button variant="outline" size="sm">
+                          Details
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="reports">
+            <Card className="mt-4">
+              <CardHeader>
+                <CardTitle>Reports & Logs</CardTitle>
+                <CardDescription>Historical record of past threats and alerts.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex h-48 items-center justify-center rounded-lg border-2 border-dashed">
+                  <p className="text-muted-foreground">Reports & Logs will be displayed here.</p>
                 </div>
-            </div>
-
-            <div className="grid grid-cols-3 gap-4 text-center">
-                 <Card className="p-4 flex flex-col items-center justify-center space-y-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                    <Zap className="h-6 w-6 text-gray-700 dark:text-gray-300" />
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Latest Updates</span>
-                </Card>
-                <Card className="p-4 flex flex-col items-center justify-center space-y-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                    <Book className="h-6 w-6 text-gray-700 dark:text-gray-300" />
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Preparedness Guide</span>
-                </Card>
-                <Card className="p-4 flex flex-col items-center justify-center space-y-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                    <Crosshair className="h-6 w-6 text-gray-700 dark:text-gray-300" />
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Report a Threat</span>
-                </Card>
-            </div>
-        </CardContent>
-    </Card>
+              </CardContent>
+            </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
