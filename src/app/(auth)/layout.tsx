@@ -11,7 +11,7 @@ export default function AuthLayout({
     <div className="flex min-h-screen w-full flex-col items-center justify-center bg-background p-4">
       <div className="absolute inset-0 -z-10">
         <Image
-          src="https://storage.googleapis.com/project-os-prod/images/45d715f5-51e4-44b5-9cb1-15b5f7b0a7c4.jpg"
+          src="https://storage.googleapis.com/project-os-prod/images/a2a68571-4357-4591-92e9-46761a23864a.jpg"
           alt="Forest canopy background"
           fill
           style={{ objectFit: 'cover' }}
