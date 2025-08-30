@@ -9,6 +9,8 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Search, Settings, LogOut } from "lucide-react";
+import { searchAction } from '@/app/actions';
+import { FormEvent } from 'react';
 
 export function DashboardHeader() {
   const pathname = usePathname();
@@ -33,6 +35,17 @@ export function DashboardHeader() {
     }
   };
 
+  const handleSearch = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const response = await searchAction(formData);
+    if (response.error) {
+      console.error(response.error);
+    } else {
+      console.log(response.results);
+    }
+  };
+
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-background px-4 lg:h-[60px] lg:px-6 sticky top-0 z-30">
         <SidebarTrigger className="md:hidden" />
@@ -40,10 +53,10 @@ export function DashboardHeader() {
             <h1 className="text-lg font-semibold">{getPageTitle()}</h1>
         </div>
         <div className="flex flex-1 items-center justify-end gap-4">
-            <div className="relative hidden sm:block">
+            <form onSubmit={handleSearch} className="relative hidden sm:block">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input placeholder="Search" className="w-full sm:w-48 md:w-72 pl-10" />
-            </div>
+                <Input name="query" placeholder="Search" className="w-full sm:w-48 md:w-72 pl-10" />
+            </form>
              <Select defaultValue="high">
                 <SelectTrigger className="w-28 hidden md:flex">
                     <SelectValue />
