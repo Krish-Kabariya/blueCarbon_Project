@@ -81,6 +81,10 @@ export function DashboardHeader() {
             setSearchResults({ results: [] });
         } else if (response.results) {
             setSearchResults(response.results);
+            if (response.results.results.length === 1 && response.results.results[0].url) {
+                router.push(response.results.results[0].url);
+                setIsPopoverOpen(false);
+            }
         }
     } catch (error) {
          toast({
@@ -223,11 +227,6 @@ export function DashboardHeader() {
                             <p className="text-xs leading-none text-muted-foreground">user@example.com</p>
                         </div>
                     </DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>
-                        <Settings className="mr-2 h-4 w-4" />
-                        <span>Notification Settings</span>
-                    </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleSignOut}>
                         <LogOut className="mr-2 h-4 w-4" />
