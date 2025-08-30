@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -17,7 +16,6 @@ import { Map, Bell, FileText, Menu } from "lucide-react";
 import dynamic from 'next/dynamic';
 import { useMemo } from "react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-
 
 const alerts = [
   {
