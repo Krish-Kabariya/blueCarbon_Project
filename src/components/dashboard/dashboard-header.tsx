@@ -209,18 +209,6 @@ export function DashboardHeader() {
                 )}
               </PopoverContent>
             </Popover>
-             <Select defaultValue="high">
-                <SelectTrigger className="w-28 hidden md:flex">
-                    <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="critical">Critical</SelectItem>
-                    <SelectItem value="high">High</SelectItem>
-                    <SelectItem value="warning">Warning</SelectItem>
-                     <SelectItem value="watch">Watch</SelectItem>
-                    <SelectItem value="advisory">Advisory</SelectItem>
-                </SelectContent>
-            </Select>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="relative h-10 w-10 rounded-full">
