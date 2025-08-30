@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, CircleMarker, Popup, Marker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 // This is to fix the default icon issue with Leaflet in React
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -26,6 +27,28 @@ interface MangroveProperties {
   latitude: number;
   longitude: number;
 }
+
+const densityColors: Record<string, {color: string, label: string}> = {
+  high: { color: '#4CAF50', label: 'High Density' },
+  medium: { color: '#FDD835', label: 'Medium Density' },
+  low: { color: '#EF6C00', label: 'Low Density' },
+};
+
+const ColorLegend = () => (
+  <Card className="absolute bottom-4 left-1/2 -translate-x-1/2 z-[1000] w-auto bg-background/80 backdrop-blur-sm">
+    <CardHeader className="p-2">
+      <CardTitle className="text-sm text-center">Mangrove Density</CardTitle>
+    </CardHeader>
+    <CardContent className="flex gap-4 p-2 pt-0">
+      {Object.values(densityColors).map((item) => (
+        <div key={item.label} className="flex items-center gap-2">
+          <div className="h-4 w-4 rounded-full" style={{ backgroundColor: item.color }}></div>
+          <span className="text-xs">{item.label}</span>
+        </div>
+      ))}
+    </CardContent>
+  </Card>
+);
 
 const LeafletMap = () => {
   const [mangroveData, setMangroveData] = useState<MangroveProperties[]>([]);
@@ -63,16 +86,11 @@ const LeafletMap = () => {
   }, []);
 
   const getStyle = (density: string) => {
-    switch (density) {
-      case 'high':
-        return { fillColor: "#4CAF50", color: "#333", weight: 1, fillOpacity: 0.8 }; // Green
-      case 'medium':
-        return { fillColor: "#FDD835", color: "#333", weight: 1, fillOpacity: 0.8 }; // Yellow
-      case 'low':
-        return { fillColor: "#EF6C00", color: "#fbe9e7", weight: 1, fillOpacity: 0.8 }; // Orange/Red
-      default:
-        return { fillColor: "#9E9E9E", color: "#fff", weight: 1, fillOpacity: 0.7 }; // Grey
+    const style = densityColors[density];
+    if (style) {
+        return { fillColor: style.color, color: "#333", weight: 1, fillOpacity: 0.8 };
     }
+    return { fillColor: "#9E9E9E", color: "#fff", weight: 1, fillOpacity: 0.7 }; // Grey
   };
   
   const tileUrl = maptilerApiKey
@@ -123,6 +141,7 @@ const LeafletMap = () => {
           </Marker>
         )}
       </MapContainer>
+      <ColorLegend />
     </div>
   );
 };
