@@ -30,7 +30,7 @@ export default async function DashboardPage() {
   const reports = await getDashboardReports();
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 p-4 md:p-6">
       <Tabs defaultValue="map" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="map"><Map className="mr-2" /> Map View</TabsTrigger>

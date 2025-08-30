@@ -152,7 +152,6 @@ export function DashboardHeader() {
             <SidebarTrigger>
               <Menu />
             </SidebarTrigger>
-            <h1 className="text-lg font-semibold">{getPageTitle()}</h1>
         </div>
 
         <div className="flex flex-1 items-center justify-end gap-4">

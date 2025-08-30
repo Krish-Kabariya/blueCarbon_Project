@@ -36,7 +36,7 @@ export default function DashboardLayout({
           <SidebarContent>
             <SidebarGroup>
               <SidebarGroupLabel className="flex items-center justify-between">
-                <span className="group-data-[collapsible=icon]:hidden">CoastalWatch</span>
+                <span>CoastalWatch</span>
               </SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
@@ -129,7 +129,7 @@ export default function DashboardLayout({
         {/* Main content */}
         <main className="flex-1 flex flex-col">
             <DashboardHeader />
-            <div className="flex-1 overflow-y-auto p-4 md:p-6">
+            <div className="flex-1 overflow-y-auto">
                 {children}
             </div>
         </main>
