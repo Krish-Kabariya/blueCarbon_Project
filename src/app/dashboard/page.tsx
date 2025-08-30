@@ -13,7 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge";
-import { Map, Bell, FileText, Menu } from "lucide-react";
+import { Map, Bell, FileText, Menu, Download, Eye } from "lucide-react";
 import dynamic from 'next/dynamic';
 import { useMemo } from "react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -42,6 +42,37 @@ export default function DashboardPage() {
       location: "Gulf Coast",
       timestamp: "2024-07-28 09:15 UTC",
     },
+  ];
+
+  const reports = [
+    {
+      id: "REP-001",
+      name: "Weekly Threat Summary",
+      date: "2024-07-28",
+      type: "Summary",
+      status: "Complete",
+    },
+    {
+      id: "REP-002",
+      name: "Hurricane Zeta Impact Analysis",
+      date: "2024-07-25",
+      type: "Impact Analysis",
+      status: "Complete",
+    },
+    {
+      id: "REP-003",
+      name: "Q3 Water Quality Report",
+      date: "2024-07-20",
+      type: "Water Quality",
+      status: "Complete",
+    },
+    {
+        id: "REP-004",
+        name: "Monthly Alert Log",
+        date: "2024-07-31",
+        type: "Log Export",
+        status: "Generating",
+    }
   ];
 
   const LeafletMap = useMemo(() => dynamic(() => import('@/components/dashboard/leaflet-map'), {
@@ -123,12 +154,42 @@ export default function DashboardPage() {
             <Card className="mt-4">
               <CardHeader>
                 <CardTitle>Reports & Logs</CardTitle>
-                <CardDescription>Historical record of past threats and alerts.</CardDescription>
+                <CardDescription>View, generate, and download historical reports.</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="flex h-48 items-center justify-center rounded-lg border-2 border-dashed">
-                  <p className="text-muted-foreground">Reports & Logs will be displayed here.</p>
-                </div>
+                 <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>Report Name</TableHead>
+                            <TableHead>Date</TableHead>
+                            <TableHead>Type</TableHead>
+                            <TableHead>Status</TableHead>
+                            <TableHead className="text-right">Actions</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {reports.map((report) => (
+                            <TableRow key={report.id}>
+                                <TableCell className="font-medium">{report.name}</TableCell>
+                                <TableCell>{report.date}</TableCell>
+                                <TableCell>{report.type}</TableCell>
+                                <TableCell>
+                                    <Badge variant={report.status === "Complete" ? "default" : "secondary"}>
+                                        {report.status}
+                                    </Badge>
+                                </TableCell>
+                                <TableCell className="text-right space-x-2">
+                                    <Button variant="outline" size="icon" aria-label="View Report">
+                                        <Eye className="h-4 w-4" />
+                                    </Button>
+                                    <Button variant="outline" size="icon" aria-label="Download Report" disabled={report.status !== 'Complete'}>
+                                        <Download className="h-4 w-4" />
+                                    </Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
               </CardContent>
             </Card>
         </TabsContent>
