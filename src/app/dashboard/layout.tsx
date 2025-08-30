@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Home, Bell, Map, BookOpen, BarChart, Menu } from "lucide-react";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 export default function DashboardLayout({
   children,
@@ -42,14 +43,36 @@ export default function DashboardLayout({
               <SidebarGroupContent>
                 <SidebarMenu>
                   <SidebarMenuItem>
-                    <SidebarMenuButton asChild tooltip="Dashboard" isActive={pathname === '/dashboard'}>
-                      <Link href="/dashboard">
-                        <div className="flex items-center gap-2">
-                          <Home />
-                          <span>Dashboard</span>
-                        </div>
-                      </Link>
-                    </SidebarMenuButton>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <SidebarMenuButton asChild tooltip="Dashboard" isActive={pathname === '/dashboard'}>
+                            <div className="flex items-center gap-2">
+                              <Home />
+                              <span>Dashboard</span>
+                            </div>
+                        </SidebarMenuButton>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-56 ml-2" align="start" side="right">
+                        <DropdownMenuItem asChild>
+                           <Link href="/dashboard">
+                              <Home className="mr-2 h-4 w-4" />
+                              <span>Dashboard</span>
+                           </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/dashboard/threat-alerts">
+                            <Bell className="mr-2 h-4 w-4" />
+                            <span>Threat Alerts</span>
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/dashboard/map">
+                            <Map className="mr-2 h-4 w-4" />
+                            <span>Interactive Map</span>
+                          </Link>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </SidebarMenuItem>
 
                   <SidebarMenuItem>
