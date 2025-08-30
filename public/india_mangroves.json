@@ -1,0 +1,348 @@
+{
+  "india_mangroves": [
+    {
+      "state": "West Bengal",
+      "city": "South 24 Parganas",
+      "latitude": 22.1764,
+      "longitude": 88.627,
+      "mangrove_cover_sq_km": 2083.53,
+      "density": "high"
+    },
+    {
+      "state": "West Bengal",
+      "city": "Purba Medinipur",
+      "latitude": 21.9567,
+      "longitude": 87.795,
+      "mangrove_cover_sq_km": 28.1,
+      "density": "medium"
+    },
+    {
+      "state": "Gujarat",
+      "city": "Kachchh",
+      "latitude": 23.7337,
+      "longitude": 69.8597,
+      "mangrove_cover_sq_km": 798.64,
+      "density": "high"
+    },
+    {
+      "state": "Gujarat",
+      "city": "Jamnagar",
+      "latitude": 22.4707,
+      "longitude": 70.0577,
+      "mangrove_cover_sq_km": 113.67,
+      "density": "high"
+    },
+    {
+      "state": "Gujarat",
+      "city": "Devbhumi Dwarka",
+      "latitude": 22.2411,
+      "longitude": 68.9691,
+      "mangrove_cover_sq_km": 105.8,
+      "density": "high"
+    },
+    {
+      "state": "Gujarat",
+      "city": "Bharuch",
+      "latitude": 21.6953,
+      "longitude": 72.9784,
+      "mangrove_cover_sq_km": 68.86,
+      "density": "medium"
+    },
+    {
+      "state": "Gujarat",
+      "city": "Surat",
+      "latitude": 21.1702,
+      "longitude": 72.8311,
+      "mangrove_cover_sq_km": 42.17,
+      "density": "medium"
+    },
+    {
+      "state": "Gujarat",
+      "city": "Bhavnagar",
+      "latitude": 21.7645,
+      "longitude": 72.1519,
+      "mangrove_cover_sq_km": 28.61,
+      "density": "medium"
+    },
+    {
+      "state": "Gujarat",
+      "city": "Ahmedabad",
+      "latitude": 23.0225,
+      "longitude": 72.5714,
+      "mangrove_cover_sq_km": 9.47,
+      "density": "low"
+    },
+    {
+      "state": "Gujarat",
+      "city": "Anand",
+      "latitude": 22.5645,
+      "longitude": 72.9649,
+      "mangrove_cover_sq_km": 5.11,
+      "density": "low"
+    },
+    {
+      "state": "Gujarat",
+      "city": "Valsad",
+      "latitude": 20.6033,
+      "longitude": 72.9329,
+      "mangrove_cover_sq_km": 2.22,
+      "density": "low"
+    },
+    {
+      "state": "Gujarat",
+      "city": "Navsari",
+      "latitude": 20.9525,
+      "longitude": 72.9333,
+      "mangrove_cover_sq_km": 0.72,
+      "density": "low"
+    },
+    {
+      "state": "Andaman & Nicobar Islands",
+      "city": "North & Middle Andaman",
+      "latitude": 12.529,
+      "longitude": 92.833,
+      "mangrove_cover_sq_km": 367.88,
+      "density": "high"
+    },
+    {
+      "state": "Andaman & Nicobar Islands",
+      "city": "South Andaman",
+      "latitude": 11.455,
+      "longitude": 92.678,
+      "mangrove_cover_sq_km": 182.12,
+      "density": "high"
+    },
+    {
+      "state": "Andaman & Nicobar Islands",
+      "city": "Nicobar",
+      "latitude": 7.838,
+      "longitude": 93.518,
+      "mangrove_cover_sq_km": 64.12,
+      "density": "medium"
+    },
+    {
+      "state": "Odisha",
+      "city": "Kendrapara",
+      "latitude": 20.498,
+      "longitude": 86.425,
+      "mangrove_cover_sq_km": 190.5,
+      "density": "high"
+    },
+    {
+      "state": "Odisha",
+      "city": "Jagatsinghpur",
+      "latitude": 20.264,
+      "longitude": 86.168,
+      "mangrove_cover_sq_km": 35.8,
+      "density": "medium"
+    },
+    {
+      "state": "Odisha",
+      "city": "Bhadrak",
+      "latitude": 21.062,
+      "longitude": 86.502,
+      "mangrove_cover_sq_km": 20.6,
+      "density": "medium"
+    },
+    {
+      "state": "Odisha",
+      "city": "Balasore",
+      "latitude": 21.493,
+      "longitude": 86.93,
+      "mangrove_cover_sq_km": 6.8,
+      "density": "low"
+    },
+    {
+      "state": "Odisha",
+      "city": "Puri",
+      "latitude": 19.813,
+      "longitude": 85.831,
+      "mangrove_cover_sq_km": 0.3,
+      "density": "low"
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Raigad",
+      "latitude": 18.514,
+      "longitude": 73.08,
+      "mangrove_cover_sq_km": 94.0,
+      "density": "medium"
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Thane",
+      "latitude": 19.218,
+      "longitude": 72.978,
+      "mangrove_cover_sq_km": 81.3,
+      "density": "medium"
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Ratnagiri",
+      "latitude": 16.994,
+      "longitude": 73.312,
+      "mangrove_cover_sq_km": 64.9,
+      "density": "medium"
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Sindhudurg",
+      "latitude": 16.353,
+      "longitude": 73.558,
+      "mangrove_cover_sq_km": 47.9,
+      "density": "medium"
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Mumbai Suburban",
+      "latitude": 19.12,
+      "longitude": 72.87,
+      "mangrove_cover_sq_km": 36.8,
+      "density": "medium"
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Mumbai City",
+      "latitude": 19.076,
+      "longitude": 72.877,
+      "mangrove_cover_sq_km": 1.1,
+      "density": "low"
+    },
+    {
+      "state": "Andhra Pradesh",
+      "city": "East Godavari",
+      "latitude": 16.923,
+      "longitude": 82.01,
+      "mangrove_cover_sq_km": 260.6,
+      "density": "high"
+    },
+    {
+      "state": "Andhra Pradesh",
+      "city": "Krishna",
+      "latitude": 16.155,
+      "longitude": 81.13,
+      "mangrove_cover_sq_km": 105.3,
+      "density": "high"
+    },
+    {
+      "state": "Andhra Pradesh",
+      "city": "Guntur",
+      "latitude": 16.306,
+      "longitude": 80.436,
+      "mangrove_cover_sq_km": 28.5,
+      "density": "medium"
+    },
+    {
+      "state": "Andhra Pradesh",
+      "city": "Nellore",
+      "latitude": 14.442,
+      "longitude": 79.986,
+      "mangrove_cover_sq_km": 4.1,
+      "density": "low"
+    },
+    {
+      "state": "Andhra Pradesh",
+      "city": "West Godavari",
+      "latitude": 16.74,
+      "longitude": 81.14,
+      "mangrove_cover_sq_km": 1.2,
+      "density": "low"
+    },
+    {
+      "state": "Tamil Nadu",
+      "city": "Cuddalore",
+      "latitude": 11.75,
+      "longitude": 79.75,
+      "mangrove_cover_sq_km": 22.8,
+      "density": "medium"
+    },
+    {
+      "state": "Tamil Nadu",
+      "city": "Ramanathapuram",
+      "latitude": 9.363,
+      "longitude": 78.835,
+      "mangrove_cover_sq_km": 8.7,
+      "density": "low"
+    },
+    {
+      "state": "Tamil Nadu",
+      "city": "Nagapattinam",
+      "latitude": 10.76,
+      "longitude": 79.84,
+      "mangrove_cover_sq_km": 4.8,
+      "density": "low"
+    },
+    {
+      "state": "Tamil Nadu",
+      "city": "Thanjavur",
+      "latitude": 10.787,
+      "longitude": 79.137,
+      "mangrove_cover_sq_km": 2.1,
+      "density": "low"
+    },
+    {
+      "state": "Goa",
+      "city": "North Goa",
+      "latitude": 15.54,
+      "longitude": 73.83,
+      "mangrove_cover_sq_km": 20.3,
+      "density": "medium"
+    },
+    {
+      "state": "Goa",
+      "city": "South Goa",
+      "latitude": 15.27,
+      "longitude": 73.98,
+      "mangrove_cover_sq_km": 6.7,
+      "density": "low"
+    },
+    {
+      "state": "Karnataka",
+      "city": "Uttara Kannada",
+      "latitude": 14.54,
+      "longitude": 74.63,
+      "mangrove_cover_sq_km": 8.1,
+      "density": "low"
+    },
+    {
+      "state": "Karnataka",
+      "city": "Udupi",
+      "latitude": 13.33,
+      "longitude": 74.74,
+      "mangrove_cover_sq_km": 1.6,
+      "density": "low"
+    },
+    {
+      "state": "Karnataka",
+      "city": "Dakshina Kannada",
+      "latitude": 12.87,
+      "longitude": 74.84,
+      "mangrove_cover_sq_km": 0.3,
+      "density": "low"
+    },
+    {
+      "state": "Kerala",
+      "city": "Kannur",
+      "latitude": 11.87,
+      "longitude": 75.37,
+      "mangrove_cover_sq_km": 4.2,
+      "density": "low"
+    },
+    {
+      "state": "Kerala",
+      "city": "Ernakulam",
+      "latitude": 9.98,
+      "longitude": 76.28,
+      "mangrove_cover_sq_km": 1.7,
+      "density": "low"
+    },
+    {
+      "state": "Kerala",
+      "city": "Kozhikode",
+      "latitude": 11.25,
+      "longitude": 75.78,
+      "mangrove_cover_sq_km": 1.2,
+      "density": "low"
+    }
+  ]
+}
