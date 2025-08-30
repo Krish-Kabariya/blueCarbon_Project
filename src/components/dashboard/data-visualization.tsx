@@ -8,7 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import dynamic from 'next/dynamic';
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 
 const threatFrequencyData = [
   { month: 'Jan', alerts: 45 },
@@ -55,6 +55,10 @@ const threatsByDistrictData = [
   { name: 'Dwarka', "Illegal Fishing": 20, "Pollution": 15, "Smuggling": 30, "High Alerts": 25, "Nuisance": 18, "Poaching": 22 },
   { name: 'Junagadh', "Illegal Fishing": 60, "Pollution": 50, "Smuggling": 40, "High Alerts": 30, "Nuisance": 20, "Poaching": 25 },
   { name: 'Somnath', "Illegal Fishing": 30, "Pollution": 20, "Smuggling": 10, "High Alerts": 5, "Nuisance": 2, "Poaching": 3 },
+  { name: 'Amreli', "Illegal Fishing": 25, "Pollution": 18, "Smuggling": 12, "High Alerts": 8, "Nuisance": 4, "Poaching": 6 },
+  { name: 'Illegal Sand Mining', "Illegal Fishing": 0, "Pollution": 5, "Smuggling": 0, "High Alerts": 2, "Nuisance": 1, "Poaching": 0 },
+  { name: 'Navsari', "Illegal Fishing": 15, "Pollution": 10, "Smuggling": 5, "High Alerts": 3, "Nuisance": 2, "Poaching": 1 },
+  { name: 'Valsad', "Illegal Fishing": 10, "Pollution": 8, "Smuggling": 3, "High Alerts": 2, "Nuisance": 1, "Poaching": 1 },
 ];
 
 export function DataVisualization() {
@@ -63,6 +67,21 @@ export function DataVisualization() {
         ssr: false,
         loading: () => <div className="flex h-full w-full items-center justify-center bg-muted"><p>Loading Map...</p></div>
     }), []);
+
+    const [selectedDistricts, setSelectedDistricts] = useState<string[]>(districts.map(d => d.name));
+    const [filteredChartData, setFilteredChartData] = useState(threatsByDistrictData);
+
+    useEffect(() => {
+        setFilteredChartData(
+            threatsByDistrictData.filter(item => selectedDistricts.includes(item.name))
+        );
+    }, [selectedDistricts]);
+
+    const handleDistrictChange = (districtName: string, checked: boolean | string) => {
+        setSelectedDistricts(prev => 
+            checked ? [...prev, districtName] : prev.filter(name => name !== districtName)
+        );
+    };
 
   return (
     <div className="p-4 md:p-6 space-y-6">
@@ -88,7 +107,11 @@ export function DataVisualization() {
                              <div key={district.id} className="flex items-center gap-3">
                                 <div className={`w-4 h-4 rounded-sm ${district.color}`}></div>
                                 <Label htmlFor={district.id} className="flex-1 font-normal">{district.name}</Label>
-                                <Checkbox id={district.id} />
+                                <Checkbox 
+                                    id={district.id}
+                                    checked={selectedDistricts.includes(district.name)}
+                                    onCheckedChange={(checked) => handleDistrictChange(district.name, checked)}
+                                />
                             </div>
                         ))}
                     </CardContent>
@@ -154,21 +177,21 @@ export function DataVisualization() {
                         </CardHeader>
                         <CardContent className="h-80">
                              <ResponsiveContainer width="100%" height="100%">
-                                <BarChart data={threatsByDistrictData} layout="vertical" stackOffset="expand">
+                                <BarChart data={filteredChartData} layout="vertical" stackOffset="expand">
                                     <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="hsl(var(--border) / 0.5)" />
                                     <XAxis type="number" hide />
-                                    <YAxis dataKey="name" type="category" tickLine={false} axisLine={false} stroke="hsl(var(--muted-foreground))" fontSize={12} />
+                                    <YAxis dataKey="name" type="category" tickLine={false} axisLine={false} stroke="hsl(var(--muted-foreground))" fontSize={12} width={120} />
                                     <Tooltip
                                         contentStyle={{backgroundColor: 'hsl(var(--background))', border: '1px solid hsl(var(--border))', borderRadius: 'var(--radius)'}}
                                         cursor={{fill: 'hsl(var(--muted) / 0.3)'}}
                                     />
                                     <Legend iconType="circle" iconSize={10} />
-                                    <Bar dataKey="Illegal Fishing" stackId="a" fill={COLORS[0]} radius={[4, 4, 0, 0]} />
+                                    <Bar dataKey="Illegal Fishing" stackId="a" fill={COLORS[0]} />
                                     <Bar dataKey="Pollution" stackId="a" fill={COLORS[1]} />
                                     <Bar dataKey="Smuggling" stackId="a" fill={COLORS[2]} />
                                     <Bar dataKey="High Alerts" stackId="a" fill={COLORS[3]} />
                                     <Bar dataKey="Nuisance" stackId="a" fill={COLORS[4]} />
-                                    <Bar dataKey="Poaching" stackId="a" fill={COLORS[5]} radius={[0, 0, 4, 4]} />
+                                    <Bar dataKey="Poaching" stackId="a" fill={COLORS[5]} radius={[4, 4, 4, 4]} />
                                 </BarChart>
                             </ResponsiveContainer>
                         </CardContent>
@@ -187,5 +210,7 @@ export function DataVisualization() {
     </div>
   );
 }
+
+    
 
     
