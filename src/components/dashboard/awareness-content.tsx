@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, MoreVertical, ShieldAlert, Waves, Biohazard, Mountain } from 'lucide-react';
+import { ChevronRight, MoreVertical, Waves, Mountain, Biohazard, Calendar, MapPin, Users, Info, Flag } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
@@ -94,21 +94,42 @@ const safetyTips = [
 
 const communityEvents = [
   {
-    date: "Aug 20",
     title: "Disaster Drill - Mandvi",
+    details: [
+      { icon: Info, label: "What", text: "A community cyclone evacuation drill to practice emergency procedures." },
+      { icon: Calendar, label: "When", text: "Aug 20, 9:00 AM." },
+      { icon: MapPin, label: "Where", text: "Assemble at Mandvi Beach Entrance." },
+      { icon: Flag, label: "Led by", text: "GSDMA & Local Authorities." },
+    ],
+    action: "All residents of coastal wards should participate to learn the evacuation route."
   },
   {
-    date: "Aug 28",
     title: "First-Aid Workshop",
+    details: [
+      { icon: Info, label: "What", text: "A hands-on workshop to learn essential first-aid for coastal emergencies (CPR, stings, etc.)." },
+      { icon: Calendar, label: "When", text: "Aug 28, 10:00 AM." },
+      { icon: MapPin, label: "Where", text: "Community Hall, Porbandar." },
+    ],
+    action: "Limited spots. RSVP to learn life-saving skills."
   },
   {
-    date: "Sep 5",
     title: "Coastal Ecosystem Workshop",
+    details: [
+      { icon: Info, label: "What", text: "A guided nature walk to explore and learn about vital mangrove and marine life." },
+      { icon: Calendar, label: "When", text: "Sep 5, 8:00 AM." },
+      { icon: MapPin, label: "Where", text: "Marine National Park, Pirotan Island." },
+    ],
+    action: "Perfect for students and families. Bring walking shoes and a sun hat."
   },
-    {
-    date: "Sep 12",
+  {
     title: "Community Cleanup Day",
-  },
+    details: [
+      { icon: Info, label: "What", text: "Join fellow volunteers to remove plastic and waste from the beach." },
+      { icon: Calendar, label: "When", text: "Sep 12, 7:30 AM." },
+      { icon: MapPin, label: "Where", text: "Dumas Beach, Surat." },
+    ],
+    action: "We provide gloves and bags. Let's work together for a cleaner coast!"
+  }
 ];
 
 export function AwarenessContent() {
@@ -210,22 +231,33 @@ export function AwarenessContent() {
       {/* Community Spotlight */}
       <section>
         <h2 className="text-xl font-semibold text-foreground mb-4">Community Spotlight</h2>
-        <Card>
-          <CardContent className="p-4 space-y-2">
-            {communityEvents.map((event, index) => (
-              <div key={index} className={cn("flex items-center justify-between p-2 rounded-md hover:bg-muted/50", index !== communityEvents.length -1 && "border-b border-border")}>
-                <div className="flex items-center gap-4">
-                   <div className="text-center text-sm w-12">
-                     <div className="font-bold">{event.date.split(' ')[0]}</div>
-                     <div className="text-muted-foreground">{event.date.split(' ')[1]}</div>
-                   </div>
-                   <p className="font-medium text-foreground">{event.title}</p>
+         <Accordion type="single" collapsible className="w-full">
+          {communityEvents.map((event, index) => (
+            <AccordionItem key={index} value={`item-${index}`}>
+              <AccordionTrigger>
+                <div className="flex items-center gap-3">
+                    <Users className="h-5 w-5 text-primary" />
+                    <span className="font-semibold">{event.title}</span>
                 </div>
-                <ChevronRight className="h-5 w-5 text-muted-foreground" />
-              </div>
-            ))}
-          </CardContent>
-        </Card>
+              </AccordionTrigger>
+              <AccordionContent className="space-y-4">
+                <div className="space-y-2 pl-2">
+                    {event.details.map((detail, detailIndex) => (
+                        <div key={detailIndex} className="flex items-start gap-3 text-muted-foreground">
+                            <detail.icon className="h-4 w-4 mt-1 flex-shrink-0" />
+                            <div>
+                                <span className="font-semibold text-foreground">{detail.label}:</span> {detail.text}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                <div className="pl-2">
+                    <p className="font-semibold text-primary">{event.action}</p>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
       </section>
     </div>
   );
