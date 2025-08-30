@@ -84,17 +84,6 @@ export default function AwarenessLayout({
                   </SidebarMenuItem>
 
                   <SidebarMenuItem>
-                    <SidebarMenuButton asChild tooltip="Leaderboard">
-                      <Link href="/leaderboard">
-                        <div className="flex items-center gap-2">
-                          <Award />
-                          <span>Leaderboard</span>
-                        </div>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-
-                  <SidebarMenuItem>
                     <SidebarMenuButton asChild tooltip="Awareness" isActive={pathname === '/awareness'}>
                       <Link href="/awareness">
                         <div className="flex items-center gap-2">
