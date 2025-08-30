@@ -1,7 +1,7 @@
 
 "use client";
 
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -12,6 +12,7 @@ import { searchAction, suggestSearchAction } from '@/app/actions';
 import { FormEvent, useState, useRef, useEffect, useCallback } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { SearchOutput } from '@/ai/flows/search';
+import { SuggestSearchOutput } from '@/ai/flows/suggest-search';
 import { Popover, PopoverContent, PopoverTrigger, PopoverAnchor } from '@/components/ui/popover';
 import Link from 'next/link';
 import { auth } from '@/lib/firebase';
@@ -27,7 +28,7 @@ export function DashboardHeader() {
   const [isSearching, setIsSearching] = useState(false);
   const [isSuggesting, setIsSuggesting] = useState(false);
   const [searchResults, setSearchResults] = useState<SearchOutput | null>(null);
-  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [suggestions, setSuggestions] = useState<SuggestSearchOutput['suggestions']>([]);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const [user, setUser] = useState<User | null>(auth.currentUser);
@@ -112,9 +113,9 @@ export function DashboardHeader() {
     handleSearch(searchQuery);
   }
 
-  const handleSuggestionClick = (suggestion: string) => {
-    setSearchQuery(suggestion);
-    handleSearch(suggestion);
+  const handleSuggestionClick = (suggestion: { city: string; lat: number; lon: number }) => {
+    setSearchQuery(suggestion.city);
+    router.push(`/dashboard?lat=${suggestion.lat}&lon=${suggestion.lon}`);
     setIsPopoverOpen(false);
   }
 
@@ -264,7 +265,7 @@ export function DashboardHeader() {
                             <MapPin className="h-4 w-4 text-muted-foreground" />
                           </div>
                           <div>
-                            <p className="text-sm font-medium">{suggestion}</p>
+                            <p className="text-sm font-medium">{suggestion.city}</p>
                             <p className="text-xs text-muted-foreground">City</p>
                           </div>
                         </button>

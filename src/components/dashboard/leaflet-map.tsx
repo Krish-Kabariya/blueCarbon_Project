@@ -1,7 +1,8 @@
 
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { MapContainer, TileLayer, CircleMarker, Popup, Marker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -54,6 +55,8 @@ const LeafletMap = () => {
   const [mangroveData, setMangroveData] = useState<MangroveProperties[]>([]);
   const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
   const maptilerApiKey = process.env.NEXT_PUBLIC_MAPTILER_API_KEY;
+  const searchParams = useSearchParams();
+  const mapRef = useRef<L.Map>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,6 +87,17 @@ const LeafletMap = () => {
       );
     }
   }, []);
+  
+  useEffect(() => {
+    const lat = searchParams.get('lat');
+    const lon = searchParams.get('lon');
+
+    if (lat && lon && mapRef.current) {
+      const latitude = parseFloat(lat);
+      const longitude = parseFloat(lon);
+      mapRef.current.flyTo([latitude, longitude], 12);
+    }
+  }, [searchParams]);
 
   const getStyle = (density: string) => {
     const style = densityColors[density];
@@ -101,14 +115,15 @@ const LeafletMap = () => {
     ? '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
     : '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
-  const position: [number, number] = userLocation || [20.5937, 78.9629]; // Center on user location or India
+  const defaultPosition: [number, number] = userLocation || [20.5937, 78.9629]; // Center on user location or India
 
   return (
     <div className="relative h-full w-full">
       <MapContainer
-        center={position}
+        center={defaultPosition}
         zoom={userLocation ? 13 : 5}
         style={{ height: '100%', width: '100%', backgroundColor: '#1a1a1a' }}
+        ref={mapRef}
       >
         <TileLayer
           url={tileUrl}
