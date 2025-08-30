@@ -18,32 +18,32 @@ import dynamic from 'next/dynamic';
 import { useMemo } from "react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 
-const alerts = [
-  {
-    id: "ALERT-001",
-    severity: "High",
-    type: "Storm Surge",
-    location: "East Coast",
-    timestamp: "2024-07-29 14:30 UTC",
-  },
-  {
-    id: "ALERT-002",
-    severity: "Medium",
-    type: "High Tides",
-    location: "West Coast",
-    timestamp: "2024-07-29 11:00 UTC",
-  },
-  {
-    id: "ALERT-003",
-    severity: "Low",
-    type: "Pollution",
-    location: "Gulf Coast",
-    timestamp: "2024-07-28 09:15 UTC",
-  },
-];
-
 
 export default function DashboardPage() {
+  const alerts = [
+    {
+      id: "ALERT-001",
+      severity: "High",
+      type: "Storm Surge",
+      location: "East Coast",
+      timestamp: "2024-07-29 14:30 UTC",
+    },
+    {
+      id: "ALERT-002",
+      severity: "Medium",
+      type: "High Tides",
+      location: "West Coast",
+      timestamp: "2024-07-29 11:00 UTC",
+    },
+    {
+      id: "ALERT-003",
+      severity: "Low",
+      type: "Pollution",
+      location: "Gulf Coast",
+      timestamp: "2024-07-28 09:15 UTC",
+    },
+  ];
+
   const LeafletMap = useMemo(() => dynamic(() => import('@/components/dashboard/leaflet-map'), {
     ssr: false,
     loading: () => <div className="flex h-full w-full items-center justify-center bg-gray-200"><p>Loading Map...</p></div>

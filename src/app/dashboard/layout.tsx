@@ -73,8 +73,8 @@ export default function DashboardLayout({
                   </SidebarMenuItem>
 
                   <SidebarMenuItem>
-                    <SidebarMenuButton asChild tooltip="Map">
-                      <Link href="/map">
+                    <SidebarMenuButton asChild tooltip="Map" isActive={pathname === '/dashboard/map'}>
+                      <Link href="/dashboard/map">
                         <div className="flex items-center gap-2">
                           <Map />
                           <span>Map</span>
