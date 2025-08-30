@@ -142,7 +142,7 @@ export default function ThreatAlertsPage() {
           case 'High': return { barColor: 'bg-red-500', bgColor: 'bg-red-500/10', textColor: 'text-red-500', borderColor: 'border-red-500', Icon: ShieldAlert };
           case 'Warning': return { barColor: 'bg-orange-500', bgColor: 'bg-orange-500/10', textColor: 'text-orange-500', borderColor: 'border-orange-500', Icon: AlertTriangle };
           case 'Watch': return { barColor: 'bg-yellow-500', bgColor: 'bg-yellow-500/10', textColor: 'text-yellow-500', borderColor: 'border-yellow-500', Icon: Info };
-          case 'Advisory': return { barColor: 'bg-gray-400', bgColor: 'bg-gray-400/10', textColor: 'text-gray-400', borderColor: 'border-gray-400', Icon: Info };
+          case 'Advisory': return { barColor: 'bg-gray-400', bgColor: 'bg-gray-400/10', textColor: 'text-gray-400', borderColor: 'border-gray-400', Icon: ShieldAlert };
           default: return { barColor: 'bg-gray-300', bgColor: 'bg-gray-300/10', textColor: 'text-gray-500', borderColor: 'border-gray-300', Icon: Info };
         }
     };
