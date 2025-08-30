@@ -118,8 +118,8 @@ export default function Home() {
             </div>
             <div className="flex justify-center">
               <Image
-                src="https://picsum.photos/600/400?random=12"
-                alt="Mangrove forest with clear water"
+                src="https://www.sundarbanwildlife.com/blog/images/uploads/320136.jpg"
+                alt="Mangrove forest in Sundarbans"
                 width={600}
                 height={400}
                 className="overflow-hidden rounded-xl object-cover"
