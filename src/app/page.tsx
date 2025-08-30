@@ -56,7 +56,7 @@ export default function Home() {
             </p>
             <div className="mt-6 flex flex-col gap-2 min-[400px]:flex-row justify-center">
               <Button asChild size="lg">
-                <Link href="/dashboard">Get Started</Link>
+                <Link href="/dashboard">Menu</Link>
               </Button>
               <Button asChild variant="outline" size="lg">
                  <Link href="/awareness">Learn More</Link>
