@@ -17,6 +17,7 @@ import { Map, Bell, FileText, Menu, Download, Eye } from "lucide-react";
 import dynamic from 'next/dynamic';
 import { useMemo } from "react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import Link from "next/link";
 
 
 export default function DashboardPage() {
@@ -179,8 +180,10 @@ export default function DashboardPage() {
                                     </Badge>
                                 </TableCell>
                                 <TableCell className="text-right space-x-2">
-                                    <Button variant="outline" size="icon" aria-label="View Report">
+                                    <Button variant="outline" size="icon" aria-label="View Report" asChild>
+                                      <Link href={`/dashboard/reports/${report.id}`}>
                                         <Eye className="h-4 w-4" />
+                                      </Link>
                                     </Button>
                                     <Button variant="outline" size="icon" aria-label="Download Report" disabled={report.status !== 'Complete'}>
                                         <Download className="h-4 w-4" />
