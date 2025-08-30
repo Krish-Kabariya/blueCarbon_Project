@@ -3,6 +3,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -10,6 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import {
   AlertTriangle,
   ChevronDown,
@@ -22,6 +24,9 @@ import {
   Wind,
   Info,
   ShieldAlert,
+  User,
+  Settings,
+  LogOut,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -43,11 +48,11 @@ interface Alert {
 
 const alertsData: Record<string, Alert[]> = {
     "Hurricane Warning": [
-        { 
-            id: "h-1", 
-            name: "Hurricane Delta Warning", 
-            location: "Coastal Louisiana", 
-            duration: "Active until Oct 15, 2024", 
+        {
+            id: "h-1",
+            name: "Hurricane Delta Warning",
+            location: "Coastal Louisiana",
+            duration: "Active until Oct 15, 2024",
             severity: "Critical",
             Icon: Tornado,
             overview: "A life-threatening storm surge is expected. Widespread flooding, hurricane-force winds, and heavy rainfall are likely. Conditions will deteriorate rapidly.",
@@ -65,11 +70,11 @@ const alertsData: Record<string, Alert[]> = {
             issuedBy: "National Weather Service",
             mapImage: "https://picsum.photos/800/450?random=1",
         },
-        { 
-            id: "h-2", 
-            name: "Hurricane Orleana", 
-            location: "Oregon", 
-            duration: "Active for 24 hours", 
+        {
+            id: "h-2",
+            name: "Hurricane Orleana",
+            location: "Oregon",
+            duration: "Active for 24 hours",
             severity: "High",
             Icon: Tornado,
             overview: "Hurricane Orleana is approaching the Oregon coast, bringing dangerous winds and heavy rain.",
@@ -80,11 +85,11 @@ const alertsData: Record<string, Alert[]> = {
         },
     ],
     "Tsunami & Storm Surge": [
-        { 
-            id: "t-1", 
-            name: "Tsunami Alert", 
-            location: "Pacific Coast", 
-            duration: "Active for 6 hours", 
+        {
+            id: "t-1",
+            name: "Tsunami Alert",
+            location: "Pacific Coast",
+            duration: "Active for 6 hours",
             severity: "Warning",
             Icon: Waves,
             overview: "A tsunami may have been generated. Monitor for official updates.",
@@ -93,11 +98,11 @@ const alertsData: Record<string, Alert[]> = {
             issuedBy: "Pacific Tsunami Warning Center",
             mapImage: "https://picsum.photos/800/450?random=3",
         },
-        { 
-            id: "t-2", 
-            name: "Storm Surge Watch", 
-            location: "East Coast", 
-            duration: "Active for 48 hours", 
+        {
+            id: "t-2",
+            name: "Storm Surge Watch",
+            location: "East Coast",
+            duration: "Active for 48 hours",
             severity: "Watch",
             Icon: Waves,
             overview: "Possibility of life-threatening inundation from rising water moving inland from the shoreline.",
@@ -108,11 +113,11 @@ const alertsData: Record<string, Alert[]> = {
         },
     ],
     "Severe Weather": [
-        { 
-            id: "s-1", 
-            name: "Gale Warning", 
-            location: "Great Lakes", 
-            duration: "Active for 24 hours", 
+        {
+            id: "s-1",
+            name: "Gale Warning",
+            location: "Great Lakes",
+            duration: "Active for 24 hours",
             severity: "Advisory",
             Icon: Wind,
             overview: "Strong winds expected over the Great Lakes, creating hazardous conditions for small craft.",
@@ -142,7 +147,7 @@ export default function ThreatAlertsPage() {
           case 'High': return { barColor: 'bg-red-500', bgColor: 'bg-red-500/10', textColor: 'text-red-500', borderColor: 'border-red-500', Icon: ShieldAlert };
           case 'Warning': return { barColor: 'bg-orange-500', bgColor: 'bg-orange-500/10', textColor: 'text-orange-500', borderColor: 'border-orange-500', Icon: AlertTriangle };
           case 'Watch': return { barColor: 'bg-yellow-500', bgColor: 'bg-yellow-500/10', textColor: 'text-yellow-500', borderColor: 'border-yellow-500', Icon: Info };
-          case 'Advisory': return { barColor: 'bg-gray-400', bgColor: 'bg-gray-400/10', textColor: 'text-gray-400', borderColor: 'border-gray-400', Icon: ShieldAlert };
+          case 'Advisory': return { barColor: 'bg-blue-500', bgColor: 'bg-blue-500/10', textColor: 'text-blue-500', borderColor: 'border-blue-500', Icon: ShieldAlert };
           default: return { barColor: 'bg-gray-300', bgColor: 'bg-gray-300/10', textColor: 'text-gray-500', borderColor: 'border-gray-300', Icon: Info };
         }
     };
@@ -209,10 +214,38 @@ export default function ThreatAlertsPage() {
                             <SelectItem value="advisory">Advisory</SelectItem>
                         </SelectContent>
                     </Select>
-                    <Avatar>
-                        <AvatarImage src="https://picsum.photos/100/100" alt="User" />
-                        <AvatarFallback>U</AvatarFallback>
-                    </Avatar>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                                <Avatar>
+                                    <AvatarImage src="https://picsum.photos/100/100" alt="User" />
+                                    <AvatarFallback>U</AvatarFallback>
+                                </Avatar>
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="w-56" align="end" forceMount>
+                            <DropdownMenuLabel className="font-normal">
+                                <div className="flex flex-col space-y-1">
+                                    <p className="text-sm font-medium leading-none">User</p>
+                                    <p className="text-xs leading-none text-muted-foreground">user@example.com</p>
+                                </div>
+                            </DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>
+                                <User className="mr-2 h-4 w-4" />
+                                <span>My Profile</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <Settings className="mr-2 h-4 w-4" />
+                                <span>Notification Settings</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>
+                                <LogOut className="mr-2 h-4 w-4" />
+                                <span>Logout</span>
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                 </div>
             </header>
 
