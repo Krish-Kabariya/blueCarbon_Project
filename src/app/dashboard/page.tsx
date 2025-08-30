@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -75,8 +76,8 @@ export default function DashboardPage() {
         name: "Monthly Alert Log",
         date: "2024-07-31",
         type: "Log Export",
-        status: "Generating",
-        href: "#"
+        status: "Complete",
+        href: "/dashboard/reports/monthly-log"
     }
   ];
 
