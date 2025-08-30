@@ -118,7 +118,7 @@ export default function Home() {
             </div>
             <div className="flex justify-center">
               <Image
-                src="https://www.sundarbanwildlife.com/blog/images/uploads/320136.jpg"
+                src="https://images.unsplash.com/photo-1590702960817-21063e414240?q=80&w=2071&auto=format&fit=crop"
                 alt="Mangrove forest"
                 width={600}
                 height={400}
