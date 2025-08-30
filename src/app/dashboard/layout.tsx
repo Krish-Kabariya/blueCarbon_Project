@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Sidebar,
   SidebarContent,
@@ -21,6 +22,8 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+
   return (
     <SidebarProvider>
       <div className="flex h-screen">
@@ -36,7 +39,7 @@ export default function DashboardLayout({
               <SidebarGroupContent>
                 <SidebarMenu>
                   <SidebarMenuItem>
-                    <SidebarMenuButton asChild tooltip="Dashboard" isActive>
+                    <SidebarMenuButton asChild tooltip="Dashboard" isActive={pathname === '/dashboard'}>
                       <Link href="/dashboard">
                         <div className="flex items-center gap-2">
                           <Home />
@@ -47,7 +50,7 @@ export default function DashboardLayout({
                   </SidebarMenuItem>
 
                   <SidebarMenuItem>
-                    <SidebarMenuButton asChild tooltip="Data Visualization">
+                    <SidebarMenuButton asChild tooltip="Data Visualization" isActive={pathname === '/dashboard/data-visualization'}>
                       <Link href="/dashboard/data-visualization">
                         <div className="flex items-center gap-2">
                           <BarChart />
@@ -58,8 +61,8 @@ export default function DashboardLayout({
                   </SidebarMenuItem>
                   
                   <SidebarMenuItem>
-                    <SidebarMenuButton asChild tooltip="Alerts">
-                      <Link href="#">
+                    <SidebarMenuButton asChild tooltip="Alerts" isActive={pathname === '/dashboard/threat-alerts'}>
+                      <Link href="/dashboard/threat-alerts">
                         <div className="flex items-center gap-2">
                           <Bell />
                           <span>Threat Alerts</span>
