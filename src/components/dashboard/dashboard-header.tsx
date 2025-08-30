@@ -16,7 +16,7 @@ import { SearchOutput } from '@/ai/flows/search';
 import { Popover, PopoverContent, PopoverTrigger, PopoverAnchor } from '@/components/ui/popover';
 import Link from 'next/link';
 import { auth } from '@/lib/firebase';
-import { signOut } from 'firebase/auth';
+import { signOut, onAuthStateChanged, User } from 'firebase/auth';
 
 
 export function DashboardHeader() {
@@ -27,7 +27,15 @@ export function DashboardHeader() {
   const [searchResults, setSearchResults] = useState<SearchOutput | null>(null);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const [user, setUser] = useState<User | null>(null);
 
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const getPageTitle = () => {
     switch (pathname) {
@@ -218,16 +226,16 @@ export function DashboardHeader() {
                 <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="relative h-10 w-10 rounded-full">
                         <Avatar>
-                            <AvatarImage src="https://picsum.photos/100/100" alt="User" />
-                            <AvatarFallback>U</AvatarFallback>
+                            <AvatarImage src={user?.photoURL ?? "https://picsum.photos/100/100"} alt="User" />
+                            <AvatarFallback>{user?.displayName?.charAt(0) ?? 'U'}</AvatarFallback>
                         </Avatar>
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56" align="end" forceMount>
                     <DropdownMenuLabel className="font-normal">
                         <div className="flex flex-col space-y-1">
-                            <p className="text-sm font-medium leading-none">User</p>
-                            <p className="text-xs leading-none text-muted-foreground">user@example.com</p>
+                            <p className="text-sm font-medium leading-none">{user?.displayName ?? 'User'}</p>
+                            <p className="text-xs leading-none text-muted-foreground">{user?.email ?? 'user@example.com'}</p>
                         </div>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
