@@ -48,6 +48,15 @@ const districts = [
     { id: 'valsad', name: 'Valsad', color: 'bg-gray-500' },
 ];
 
+const threatsByDistrictData = [
+  { name: 'Kutch', "Illegal Fishing": 40, "Pollution": 30, "Smuggling": 20, "High Alerts": 10, "Nuisance": 5, "Poaching": 15 },
+  { name: 'Jamnagar', "Illegal Fishing": 35, "Pollution": 25, "Smuggling": 15, "High Alerts": 20, "Nuisance": 10, "Poaching": 5 },
+  { name: 'Porbandar', "Illegal Fishing": 50, "Pollution": 40, "Smuggling": 25, "High Alerts": 15, "Nuisance": 12, "Poaching": 8 },
+  { name: 'Dwarka', "Illegal Fishing": 20, "Pollution": 15, "Smuggling": 30, "High Alerts": 25, "Nuisance": 18, "Poaching": 22 },
+  { name: 'Junagadh', "Illegal Fishing": 60, "Pollution": 50, "Smuggling": 40, "High Alerts": 30, "Nuisance": 20, "Poaching": 25 },
+  { name: 'Somnath', "Illegal Fishing": 30, "Pollution": 20, "Smuggling": 10, "High Alerts": 5, "Nuisance": 2, "Poaching": 3 },
+];
+
 export function DataVisualization() {
     
     const LeafletMap = useMemo(() => dynamic(() => import('@/components/dashboard/leaflet-map'), {
@@ -118,26 +127,53 @@ export function DataVisualization() {
             
             {/* Main Content */}
             <main className="lg:col-span-3 flex flex-col gap-6">
-                 <Card>
-                    <CardHeader>
-                        <CardTitle>Threat Frequency by Month</CardTitle>
-                    </CardHeader>
-                    <CardContent className="h-80">
-                         <ResponsiveContainer width="100%" height="100%">
-                            <BarChart data={threatFrequencyData}>
-                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border) / 0.5)" />
-                                <XAxis dataKey="month" fontSize={12} tickLine={false} axisLine={false} stroke="hsl(var(--muted-foreground))" />
-                                <YAxis fontSize={12} tickLine={false} axisLine={false} stroke="hsl(var(--muted-foreground))" />
-                                <Tooltip
-                                    contentStyle={{backgroundColor: 'hsl(var(--background))', border: '1px solid hsl(var(--border))', borderRadius: 'var(--radius)'}}
-                                    cursor={{fill: 'hsl(var(--muted) / 0.3)'}}
-                                />
-                                <Legend iconType="square" iconSize={10} />
-                                <Bar dataKey="alerts" fill="hsl(var(--primary))" name="Alerts" radius={[4, 4, 0, 0]} />
-                            </BarChart>
-                        </ResponsiveContainer>
-                    </CardContent>
-                </Card>
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                     <Card>
+                        <CardHeader>
+                            <CardTitle>Threat Frequency by Month</CardTitle>
+                        </CardHeader>
+                        <CardContent className="h-80">
+                             <ResponsiveContainer width="100%" height="100%">
+                                <BarChart data={threatFrequencyData}>
+                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border) / 0.5)" />
+                                    <XAxis dataKey="month" fontSize={12} tickLine={false} axisLine={false} stroke="hsl(var(--muted-foreground))" />
+                                    <YAxis fontSize={12} tickLine={false} axisLine={false} stroke="hsl(var(--muted-foreground))" />
+                                    <Tooltip
+                                        contentStyle={{backgroundColor: 'hsl(var(--background))', border: '1px solid hsl(var(--border))', borderRadius: 'var(--radius)'}}
+                                        cursor={{fill: 'hsl(var(--muted) / 0.3)'}}
+                                    />
+                                    <Legend iconType="square" iconSize={10} />
+                                    <Bar dataKey="alerts" fill="hsl(var(--primary))" name="Alerts" radius={[4, 4, 0, 0]} />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Threats by Selected District</CardTitle>
+                        </CardHeader>
+                        <CardContent className="h-80">
+                             <ResponsiveContainer width="100%" height="100%">
+                                <BarChart data={threatsByDistrictData} layout="vertical" stackOffset="expand">
+                                    <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="hsl(var(--border) / 0.5)" />
+                                    <XAxis type="number" hide />
+                                    <YAxis dataKey="name" type="category" tickLine={false} axisLine={false} stroke="hsl(var(--muted-foreground))" fontSize={12} />
+                                    <Tooltip
+                                        contentStyle={{backgroundColor: 'hsl(var(--background))', border: '1px solid hsl(var(--border))', borderRadius: 'var(--radius)'}}
+                                        cursor={{fill: 'hsl(var(--muted) / 0.3)'}}
+                                    />
+                                    <Legend iconType="circle" iconSize={10} />
+                                    <Bar dataKey="Illegal Fishing" stackId="a" fill={COLORS[0]} radius={[4, 4, 0, 0]} />
+                                    <Bar dataKey="Pollution" stackId="a" fill={COLORS[1]} />
+                                    <Bar dataKey="Smuggling" stackId="a" fill={COLORS[2]} />
+                                    <Bar dataKey="High Alerts" stackId="a" fill={COLORS[3]} />
+                                    <Bar dataKey="Nuisance" stackId="a" fill={COLORS[4]} />
+                                    <Bar dataKey="Poaching" stackId="a" fill={COLORS[5]} radius={[0, 0, 4, 4]} />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </CardContent>
+                    </Card>
+                </div>
                 <Card>
                     <CardHeader>
                         <CardTitle>Historical Alert Hotspots</CardTitle>
@@ -151,3 +187,5 @@ export function DataVisualization() {
     </div>
   );
 }
+
+    
