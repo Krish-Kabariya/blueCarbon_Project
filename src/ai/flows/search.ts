@@ -40,19 +40,19 @@ const prompt = ai.definePrompt({
 
 You will be given a search query and you need to return a list of relevant results from the application.
 
-The application has the following sections:
+The application has the following sections, which should be the only source for search results:
 - Dashboard (/dashboard)
 - Data Visualization (/dashboard/data-visualization)
 - Threat Alerts (/dashboard/threat-alerts)
 - Interactive Map (/dashboard/map)
-- Reports & Logs (/dashboard)
-  - Weekly Threat Summary (/dashboard/reports/REP-001)
-  - Hurricane Zeta Impact Analysis (/dashboard/reports/impact-analysis)
-  - Q3 Water Quality Report (/dashboard/reports/water-quality)
-  - Monthly Alert Log (/dashboard/reports/monthly-log)
+- Reports & Logs (/dashboard) which contains the following reports:
+  - Weekly Threat Summary (as a Report, url: /dashboard/reports/REP-001)
+  - Hurricane Zeta Impact Analysis (as a Report, url: /dashboard/reports/impact-analysis)
+  - Q3 Water Quality Report (as a Report, url: /dashboard/reports/water-quality)
+  - Monthly Alert Log (as a Report, url: /dashboard/reports/monthly-log)
 - Awareness (/awareness)
 
-Based on the user query "{{query}}", provide a list of relevant search results with their type, title, url, and a short description.`,
+Based on the user query "{{query}}", provide a list of relevant search results with their type, title, url, and a short description. Only return results from the list above.`,
 });
 
 const searchFlow = ai.defineFlow(
