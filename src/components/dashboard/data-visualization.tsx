@@ -12,16 +12,25 @@ import { useMemo, useState, useEffect } from "react";
 
 const threatFrequencyData30d = Array.from({ length: 30 }, (_, i) => ({
   day: `Day ${i + 1}`,
-  alerts: Math.floor(Math.random() * 10) + 1,
+  Kutch: Math.floor(Math.random() * 5) + 1,
+  Jamnagar: Math.floor(Math.random() * 4),
+  Porbandar: Math.floor(Math.random() * 6),
+  Dwarka: Math.floor(Math.random() * 3),
+  Junagadh: Math.floor(Math.random() * 7),
+  Somnath: Math.floor(Math.random() * 2),
+  Amreli: Math.floor(Math.random() * 3),
+  "Illegal Sand Mining": Math.floor(Math.random() * 1),
+  Navsari: Math.floor(Math.random() * 2),
+  Valsad: Math.floor(Math.random() * 2),
 }));
 
 const threatFrequencyData6m = [
-  { month: 'Mar', alerts: 50 },
-  { month: 'Apr', alerts: 80 },
-  { month: 'May', alerts: 60 },
-  { month: 'Jun', alerts: 40 },
-  { month: 'Jul', alerts: 95 },
-  { month: 'Aug', alerts: 52 },
+  { month: 'Mar', Kutch: 20, Jamnagar: 15, Porbandar: 25, Dwarka: 10, Junagadh: 30, Somnath: 5, Amreli: 8, "Illegal Sand Mining": 2, Navsari: 5, Valsad: 4 },
+  { month: 'Apr', Kutch: 30, Jamnagar: 20, Porbandar: 35, Dwarka: 15, Junagadh: 40, Somnath: 10, Amreli: 12, "Illegal Sand Mining": 3, Navsari: 7, Valsad: 6 },
+  { month: 'May', Kutch: 25, Jamnagar: 18, Porbandar: 30, Dwarka: 12, Junagadh: 35, Somnath: 8, Amreli: 10, "Illegal Sand Mining": 1, Navsari: 6, Valsad: 5 },
+  { month: 'Jun', Kutch: 40, Jamnagar: 25, Porbandar: 45, Dwarka: 20, Junagadh: 50, Somnath: 15, Amreli: 18, "Illegal Sand Mining": 4, Navsari: 10, Valsad: 8 },
+  { month: 'Jul', Kutch: 50, Jamnagar: 30, Porbandar: 55, Dwarka: 25, Junagadh: 60, Somnath: 20, Amreli: 22, "Illegal Sand Mining": 5, Navsari: 12, Valsad: 10 },
+  { month: 'Aug', Kutch: 35, Jamnagar: 22, Porbandar: 40, Dwarka: 18, Junagadh: 45, Somnath: 12, Amreli: 15, "Illegal Sand Mining": 3, Navsari: 8, Valsad: 7 },
 ];
 
 const threatTypeData = [
@@ -70,6 +79,7 @@ export function DataVisualization() {
     const [selectedDistricts, setSelectedDistricts] = useState<string[]>(districts.map(d => d.name));
     const [filteredChartData, setFilteredChartData] = useState(threatsByDistrictData);
     const [timeRange, setTimeRange] = useState<'30d' | '6m'>('6m');
+    const [frequencyDistrict, setFrequencyDistrict] = useState<string>('All');
 
     useEffect(() => {
         setFilteredChartData(
@@ -83,7 +93,22 @@ export function DataVisualization() {
         );
     };
 
-    const frequencyData = timeRange === '30d' ? threatFrequencyData30d : threatFrequencyData6m;
+    const frequencyData = useMemo(() => {
+        const sourceData = timeRange === '30d' ? threatFrequencyData30d : threatFrequencyData6m;
+        if (frequencyDistrict === 'All') {
+            return sourceData.map(item => {
+                const total = Object.keys(item)
+                    .filter(key => key !== 'day' && key !== 'month')
+                    .reduce((acc, key) => acc + (item as any)[key], 0);
+                return { ...item, alerts: total };
+            });
+        }
+        return sourceData.map(item => ({
+            ...item,
+            alerts: (item as any)[frequencyDistrict] || 0
+        }));
+    }, [timeRange, frequencyDistrict]);
+
     const frequencyDataKey = timeRange === '30d' ? 'day' : 'month';
 
   return (
@@ -168,7 +193,20 @@ export function DataVisualization() {
                 <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
                      <Card>
                         <CardHeader>
-                            <CardTitle>Threat Frequency</CardTitle>
+                            <div className="flex justify-between items-center">
+                                <CardTitle>Threat Frequency</CardTitle>
+                                <Select value={frequencyDistrict} onValueChange={setFrequencyDistrict}>
+                                    <SelectTrigger className="w-40">
+                                        <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="All">All Districts</SelectItem>
+                                        {districts.map(d => (
+                                            <SelectItem key={d.id} value={d.name}>{d.name}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
                         </CardHeader>
                         <CardContent className="h-80">
                              <ResponsiveContainer width="100%" height="100%">
@@ -180,7 +218,6 @@ export function DataVisualization() {
                                         contentStyle={{backgroundColor: 'hsl(var(--background))', border: '1px solid hsl(var(--border))', borderRadius: 'var(--radius)'}}
                                         cursor={{fill: 'hsl(var(--muted) / 0.3)'}}
                                     />
-                                    <Legend iconType="square" iconSize={10} />
                                     <Bar dataKey="alerts" fill="hsl(var(--primary))" name="Alerts" radius={[4, 4, 0, 0]} />
                                 </BarChart>
                             </ResponsiveContainer>
@@ -225,3 +262,5 @@ export function DataVisualization() {
     </div>
   );
 }
+
+    
