@@ -10,19 +10,18 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import dynamic from 'next/dynamic';
 import { useMemo, useState, useEffect } from "react";
 
-const threatFrequencyData = [
-  { month: 'Jan', alerts: 45 },
-  { month: 'Feb', alerts: 55 },
+const threatFrequencyData30d = Array.from({ length: 30 }, (_, i) => ({
+  day: `Day ${i + 1}`,
+  alerts: Math.floor(Math.random() * 10) + 1,
+}));
+
+const threatFrequencyData6m = [
   { month: 'Mar', alerts: 50 },
   { month: 'Apr', alerts: 80 },
   { month: 'May', alerts: 60 },
   { month: 'Jun', alerts: 40 },
   { month: 'Jul', alerts: 95 },
   { month: 'Aug', alerts: 52 },
-  { month: 'Sep', alerts: 20 },
-  { month: 'Oct', alerts: 15 },
-  { month: 'Nov', alerts: 10 },
-  { month: 'Dec', alerts: 18 },
 ];
 
 const threatTypeData = [
@@ -70,6 +69,7 @@ export function DataVisualization() {
 
     const [selectedDistricts, setSelectedDistricts] = useState<string[]>(districts.map(d => d.name));
     const [filteredChartData, setFilteredChartData] = useState(threatsByDistrictData);
+    const [timeRange, setTimeRange] = useState<'30d' | '6m'>('6m');
 
     useEffect(() => {
         setFilteredChartData(
@@ -83,6 +83,9 @@ export function DataVisualization() {
         );
     };
 
+    const frequencyData = timeRange === '30d' ? threatFrequencyData30d : threatFrequencyData6m;
+    const frequencyDataKey = timeRange === '30d' ? 'day' : 'month';
+
   return (
     <div className="p-4 md:p-6 space-y-6">
         <h1 className="text-3xl font-bold">Data Visualization</h1>
@@ -94,8 +97,20 @@ export function DataVisualization() {
                         <CardTitle>Date Range</CardTitle>
                     </CardHeader>
                     <CardContent className="flex gap-2">
-                        <Button variant="secondary" className="flex-1">Last 30 days</Button>
-                        <Button variant="ghost" className="flex-1">Last 6 months</Button>
+                        <Button 
+                            variant={timeRange === '30d' ? 'secondary' : 'ghost'} 
+                            className="flex-1"
+                            onClick={() => setTimeRange('30d')}
+                        >
+                            Last 30 days
+                        </Button>
+                        <Button 
+                             variant={timeRange === '6m' ? 'secondary' : 'ghost'} 
+                            className="flex-1"
+                            onClick={() => setTimeRange('6m')}
+                        >
+                            Last 6 months
+                        </Button>
                     </CardContent>
                 </Card>
                  <Card>
@@ -153,13 +168,13 @@ export function DataVisualization() {
                 <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
                      <Card>
                         <CardHeader>
-                            <CardTitle>Threat Frequency by Month</CardTitle>
+                            <CardTitle>Threat Frequency</CardTitle>
                         </CardHeader>
                         <CardContent className="h-80">
                              <ResponsiveContainer width="100%" height="100%">
-                                <BarChart data={threatFrequencyData}>
+                                <BarChart data={frequencyData}>
                                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border) / 0.5)" />
-                                    <XAxis dataKey="month" fontSize={12} tickLine={false} axisLine={false} stroke="hsl(var(--muted-foreground))" />
+                                    <XAxis dataKey={frequencyDataKey} fontSize={12} tickLine={false} axisLine={false} stroke="hsl(var(--muted-foreground))" />
                                     <YAxis fontSize={12} tickLine={false} axisLine={false} stroke="hsl(var(--muted-foreground))" />
                                     <Tooltip
                                         contentStyle={{backgroundColor: 'hsl(var(--background))', border: '1px solid hsl(var(--border))', borderRadius: 'var(--radius)'}}
@@ -210,7 +225,3 @@ export function DataVisualization() {
     </div>
   );
 }
-
-    
-
-    
