@@ -2,7 +2,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { GoogleMapComponent } from "@/components/dashboard/google-map";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Table,
@@ -14,6 +13,8 @@ import {
 } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge";
 import { Map, Bell, FileText } from "lucide-react";
+import dynamic from 'next/dynamic';
+import { useMemo } from "react";
 
 
 const alerts = [
@@ -42,6 +43,11 @@ const alerts = [
 
 
 export default function DashboardPage() {
+  const LeafletMap = useMemo(() => dynamic(() => import('@/components/dashboard/leaflet-map'), {
+    ssr: false,
+    loading: () => <div className="flex h-full w-full items-center justify-center bg-gray-200"><p>Loading Map...</p></div>
+  }), []);
+
   return (
     <div className="space-y-6">
       <Tabs defaultValue="map" className="w-full">
@@ -51,11 +57,11 @@ export default function DashboardPage() {
           <TabsTrigger value="reports"><FileText className="mr-2" /> Reports & Logs</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="map">
+        <TabsContent value="map" forceMount>
           <Card className="mt-4">
             <CardContent className="p-0">
                <div className="relative rounded-lg overflow-hidden aspect-video">
-                  <GoogleMapComponent />
+                  <LeafletMap />
               </div>
             </CardContent>
           </Card>
