@@ -1,6 +1,8 @@
+
 import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
+  reactStrictMode: false,
   /* config options here */
   typescript: {
     ignoreBuildErrors: true,
@@ -37,7 +39,7 @@ const nextConfig: NextConfig = {
     ],
   },
   env: {
-    NEXT_PUBLIC_MAPS_API_KEY: process.env.MAPS_API_KEY,
+    NEXT_PUBLIC_MAPTILER_API_KEY: process.env.NEXT_PUBLIC_MAPTILER_API_KEY,
   }
 };
 
