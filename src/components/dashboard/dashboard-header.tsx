@@ -15,7 +15,8 @@ import { useToast } from '@/hooks/use-toast';
 import { SearchOutput } from '@/ai/flows/search';
 import { Popover, PopoverContent, PopoverTrigger, PopoverAnchor } from '@/components/ui/popover';
 import Link from 'next/link';
-import { cn } from '@/lib/utils';
+import { auth } from '@/lib/firebase';
+import { signOut } from 'firebase/auth';
 
 
 export function DashboardHeader() {
@@ -115,6 +116,24 @@ export function DashboardHeader() {
     };
   }, []);
 
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      router.push('/login');
+      toast({
+        title: 'Signed Out',
+        description: 'You have been successfully signed out.',
+      });
+    } catch (error) {
+      console.error('Sign Out Error:', error);
+      toast({
+        variant: 'destructive',
+        title: 'Sign Out Failed',
+        description: 'Could not sign out. Please try again.',
+      });
+    }
+  };
+
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-background px-4 lg:h-[60px] lg:px-6 sticky top-0 z-30">
         <SidebarTrigger className="md:hidden" />
@@ -210,9 +229,9 @@ export function DashboardHeader() {
                         <span>Notification Settings</span>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleSignOut}>
                         <LogOut className="mr-2 h-4 w-4" />
-                        <span>Logout</span>
+                        <span>Sign out</span>
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
