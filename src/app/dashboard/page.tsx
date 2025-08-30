@@ -1,7 +1,5 @@
 
 
-"use client";
-
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -14,77 +12,27 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge";
-import { Map, Bell, FileText, Menu, Download, Eye } from "lucide-react";
+import { Map, Bell, FileText, Download, Eye } from "lucide-react";
 import dynamic from 'next/dynamic';
-import { useMemo } from "react";
-import { SidebarTrigger } from "@/components/ui/sidebar";
+import { getDashboardAlerts, getDashboardReports, seedInitialData } from "@/lib/services/dashboard";
 import Link from "next/link";
 
 
-export default function DashboardPage() {
-  const alerts = [
-    {
-      id: "ALERT-001",
-      severity: "High",
-      type: "Storm Surge",
-      location: "East Coast",
-      timestamp: "2024-07-29 14:30 UTC",
-    },
-    {
-      id: "ALERT-002",
-      severity: "Medium",
-      type: "High Tides",
-      location: "West Coast",
-      timestamp: "2024-07-29 11:00 UTC",
-    },
-    {
-      id: "ALERT-003",
-      severity: "Low",
-      type: "Pollution",
-      location: "Gulf Coast",
-      timestamp: "2024-07-28 09:15 UTC",
-    },
-  ];
+// Seed data on first load in a development environment.
+// In a real production app, this would be handled by a separate migration script.
+if (process.env.NODE_ENV === 'development') {
+  seedInitialData();
+}
 
-  const reports = [
-    {
-      id: "REP-001",
-      name: "Weekly Threat Summary",
-      date: "2024-07-28",
-      type: "Summary",
-      status: "Complete",
-      href: "/dashboard/reports/REP-001"
-    },
-    {
-      id: "REP-002",
-      name: "Hurricane Zeta Impact Analysis",
-      date: "2024-07-25",
-      type: "Impact Analysis",
-      status: "Complete",
-      href: "/dashboard/reports/impact-analysis"
-    },
-    {
-      id: "REP-003",
-      name: "Q3 Water Quality Report",
-      date: "2024-07-20",
-      type: "Water Quality",
-      status: "Complete",
-      href: "/dashboard/reports/water-quality"
-    },
-    {
-        id: "REP-004",
-        name: "Monthly Alert Log",
-        date: "2024-07-31",
-        type: "Log Export",
-        status: "Complete",
-        href: "/dashboard/reports/monthly-log"
-    }
-  ];
+const LeafletMap = dynamic(() => import('@/components/dashboard/leaflet-map'), {
+  ssr: false,
+  loading: () => <div className="flex h-full w-full items-center justify-center bg-gray-200"><p>Loading Map...</p></div>
+});
 
-  const LeafletMap = useMemo(() => dynamic(() => import('@/components/dashboard/leaflet-map'), {
-    ssr: false,
-    loading: () => <div className="flex h-full w-full items-center justify-center bg-gray-200"><p>Loading Map...</p></div>
-  }), []);
+export default async function DashboardPage() {
+  
+  const alerts = await getDashboardAlerts();
+  const reports = await getDashboardReports();
 
   return (
     <div className="space-y-6">
@@ -95,7 +43,7 @@ export default function DashboardPage() {
           <TabsTrigger value="reports"><FileText className="mr-2" /> Reports & Logs</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="map" forceMount>
+        <TabsContent value="map">
           <Card className="mt-4">
             <CardContent className="p-0">
                <div className="relative rounded-lg overflow-hidden aspect-video">
@@ -137,10 +85,10 @@ export default function DashboardPage() {
                       </TableCell>
                       <TableCell>{alert.type}</TableCell>
                       <TableCell>{alert.location}</TableCell>
-                      <TableCell>{alert.timestamp}</TableCell>
+                      <TableCell>{new Date(alert.timestamp).toUTCString()}</TableCell>
                       <TableCell className="text-right">
-                        <Button variant="outline" size="sm">
-                          Details
+                        <Button variant="outline" size="sm" asChild>
+                          <Link href="/dashboard/threat-alerts">Details</Link>
                         </Button>
                       </TableCell>
                     </TableRow>
