@@ -71,10 +71,6 @@ const InteractiveMap = () => {
           <CardTitle>Data Filters</CardTitle>
         </CardHeader>
         <CardContent className="flex-grow overflow-y-auto space-y-4">
-          <div className="relative">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input placeholder="Search location..." className="pl-8" />
-          </div>
           <Accordion type="multiple" defaultValue={['threat-type', 'severity', 'time-range']} className="w-full">
             <AccordionItem value="threat-type">
               <AccordionTrigger>Threat Type</AccordionTrigger>
