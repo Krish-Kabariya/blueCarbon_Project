@@ -10,9 +10,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Search, Calendar as CalendarIcon } from 'lucide-react';
+import { Calendar as CalendarIcon } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
@@ -33,6 +32,9 @@ const threatData = [
   { id: 3, lat: 19.0, lng: 72.8, type: 'Storm Surge', severity: 'Advisory', name: 'High Tide Advisory', details: 'High tides expected, minor coastal flooding possible.' },
   { id: 4, lat: 22.5, lng: 88.3, type: 'Water Quality', severity: 'Advisory', name: 'Algal Bloom', details: 'Harmful algal bloom detected.' },
   { id: 5, lat: 8.5, lng: 76.9, type: 'High Rip Current', severity: 'Warning', name: 'Strong Rip Currents', details: 'Dangerous rip currents, swimming not advised.' },
+  { id: 6, lat: 20.4, lng: 85.8, type: 'Cyclone', severity: 'Warning', name: 'Cyclone Fani', details: 'Severe cyclonic storm approaching the coast.' },
+  { id: 7, lat: 15.4, lng: 73.8, type: 'Water Quality', severity: 'Advisory', name: 'Industrial Runoff', details: 'Industrial runoff detected, avoid contact with water.' },
+  { id: 8, lat: 11.3, lng: 92.7, type: 'Tsunami', severity: 'Watch', name: 'Tsunami Watch', details: 'Undersea earthquake reported.' },
 ];
 
 const severityColors: Record<string, string> = {
@@ -60,8 +62,16 @@ const ColorLegend = () => (
 
 const InteractiveMap = () => {
   const [date, setDate] = useState<Date>();
+  const [selectedSeverity, setSelectedSeverity] = useState('all');
 
   const position: [number, number] = [20.5937, 78.9629]; // Center of India
+  
+  const filteredThreats = useMemo(() => {
+    if (selectedSeverity === 'all') {
+      return threatData;
+    }
+    return threatData.filter(threat => threat.severity.toLowerCase() === selectedSeverity);
+  }, [selectedSeverity]);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-4 h-full">
@@ -92,7 +102,7 @@ const InteractiveMap = () => {
             <AccordionItem value="severity">
               <AccordionTrigger>Severity</AccordionTrigger>
               <AccordionContent>
-                <RadioGroup defaultValue="all">
+                <RadioGroup defaultValue="all" value={selectedSeverity} onValueChange={setSelectedSeverity}>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="all" id="r-all" />
                     <Label htmlFor="r-all">All</Label>
@@ -154,7 +164,7 @@ const InteractiveMap = () => {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
-          {threatData.map((threat) => (
+          {filteredThreats.map((threat) => (
             <CircleMarker
               key={threat.id}
               center={[threat.lat, threat.lng]}
