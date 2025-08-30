@@ -69,7 +69,7 @@ export default function DashboardPage() {
       date: "2024-07-20",
       type: "Water Quality",
       status: "Complete",
-      href: "/dashboard/reports/REP-003"
+      href: "/dashboard/reports/water-quality"
     },
     {
         id: "REP-004",
