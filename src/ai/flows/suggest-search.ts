@@ -29,7 +29,13 @@ const SuggestSearchOutputSchema = z.object({
 });
 export type SuggestSearchOutput = z.infer<typeof SuggestSearchOutputSchema>;
 
+let cityDataCache: Array<{ city: string; lat: number; lon: number }> | null = null;
+
 async function getCityData(): Promise<Array<{ city: string; lat: number; lon: number }>> {
+    if (cityDataCache) {
+        return cityDataCache;
+    }
+
     try {
         const filePath = path.join(process.cwd(), 'public', 'india_mangroves.json');
         const fileContent = await fs.readFile(filePath, 'utf-8');
@@ -49,12 +55,16 @@ async function getCityData(): Promise<Array<{ city: string; lat: number; lon: nu
             }
         });
         
-        return Array.from(uniqueCities.values());
+        cityDataCache = Array.from(uniqueCities.values());
+        return cityDataCache;
     } catch (error) {
         console.error("Failed to load or parse city data:", error);
         return [];
     }
 }
+
+// Pre-load data on server startup
+getCityData();
 
 export async function suggestSearch(input: SuggestSearchInput): Promise<SuggestSearchOutput> {
   return suggestSearchFlow(input);
