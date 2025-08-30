@@ -1,167 +1,164 @@
+
 "use client";
 
-import * as React from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { getVisualization } from "@/app/actions";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { Loader2, Wand2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { Input } from "../ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import dynamic from 'next/dynamic';
+import { useMemo } from "react";
 
-const formSchema = z.object({
-  dataType: z.string().min(1, "Data type is required."),
-  dataValues: z.string().min(1, "Data values are required.").refine((val) => {
-    try {
-      JSON.parse(val);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }, { message: "Must be valid JSON." }),
-  visualizationType: z.string().min(1, "Visualization type is required."),
-});
+const threatFrequencyData = [
+  { month: 'Jan', alerts: 45 },
+  { month: 'Feb', 'Low Alerts / All Alerts': 55 },
+  { month: 'Mar', 'Low Alerts / All Alerts': 50 },
+  { month: 'Apr', 'Low Alerts / All Alerts': 80 },
+  { month: 'May', 'Low Alerts / All Alerts': 60 },
+  { month: 'Jun', 'Low Alerts / All Alerts': 40 },
+  { month: 'Jul', 'Low Alerts / All Alerts': 95 },
+  { month: 'Aug', 'Low Alerts / All Alerts': 52 },
+  { month: 'Sep', 'Low Alerts / All Alerts': 20 },
+  { month: 'Oct', 'Low Alerts / All Alerts': 15 },
+  { month: 'Nov', 'Low Alerts / All Alerts': 10 },
+  { month: 'Dec', 'Low Alerts / All Alerts': 18 },
+];
+
+const threatTypeData = [
+  { name: 'Illegal Fishing', value: 400 },
+  { name: 'Pollution', value: 300 },
+  { name: 'Smuggling', value: 300 },
+  { name: 'High Alerts', value: 200 },
+  { name: 'Nuisance', value: 100 },
+  { name: 'Poaching', value: 150 },
+];
+const COLORS = ['#22c55e', '#f97316', '#8b5cf6', '#3b82f6', '#facc15', '#ef4444'];
+
+const districts = [
+    { id: 'kutch', name: 'Kutch', color: 'bg-blue-500' },
+    { id: 'jamnagar', name: 'Jamnagar', color: 'bg-purple-500' },
+    { id: 'porbandar', name: 'Porbandar', color: 'bg-yellow-500' },
+    { id: 'dwarka', name: 'Devbhoomi Dwarka', color: 'bg-orange-500' },
+    { id: 'junagadh', name: 'Junagadh', color: 'bg-red-500' },
+    { id: 'somnath', name: 'Gir Somnath', color: 'bg-green-500' },
+    { id: 'amreli', name: 'Amreli', color: 'bg-teal-500' },
+    { id: 'sand-mining', name: 'Illegal Sand Mining', color: 'bg-cyan-500' },
+    { id: 'navsari', name: 'Navsari', color: 'bg-indigo-500' },
+    { id: 'valsad', name: 'Valsad', color: 'bg-gray-500' },
+];
 
 export function DataVisualization() {
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [result, setResult] = React.useState<string | null>(null);
-  const { toast } = useToast();
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      dataType: "blue carbon levels",
-      dataValues: JSON.stringify([
-        { "location": "Sundarbans", "year": 2020, "carbon_stored_tons": 50000 },
-        { "location": "Sundarbans", "year": 2021, "carbon_stored_tons": 48000 },
-        { "location": "Pichavaram", "year": 2021, "carbon_stored_tons": 35000 }
-      ], null, 2),
-      visualizationType: "bar chart",
-    },
-  });
-
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsLoading(true);
-    setResult(null);
-
-    const formData = new FormData();
-    formData.append('dataType', values.dataType);
-    formData.append('dataValues', values.dataValues);
-    formData.append('visualizationType', values.visualizationType);
-
-    const response = await getVisualization(formData);
-
-    setIsLoading(false);
-
-    if (response.error) {
-      toast({ variant: "destructive", title: "Error", description: response.error });
-    } else if (response.visualization) {
-      setResult(response.visualization);
-    }
-  }
+    
+    const LeafletMap = useMemo(() => dynamic(() => import('@/components/dashboard/leaflet-map'), {
+        ssr: false,
+        loading: () => <div className="flex h-full w-full items-center justify-center bg-muted"><p>Loading Map...</p></div>
+    }), []);
 
   return (
-    <Card className="col-span-1 lg:col-span-2">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Wand2 className="text-primary" />
-          AI-Powered Data Visualization
-        </CardTitle>
-        <CardDescription>
-          Use AI to generate insights and summaries from environmental data.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="grid gap-6 md:grid-cols-2">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="dataType"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Data Type</FormLabel>
-                   <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a data type" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="blue carbon levels">Blue Carbon Levels</SelectItem>
-                      <SelectItem value="pollution reports">Pollution Reports</SelectItem>
-                      <SelectItem value="storm surges">Storm Surges</SelectItem>
-                      <SelectItem value="sea levels">Sea Levels</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-             <FormField
-              control={form.control}
-              name="visualizationType"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Visualization Type</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a visualization type" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="bar chart">Bar Chart</SelectItem>
-                      <SelectItem value="map">Map</SelectItem>
-                      <SelectItem value="table">Table</SelectItem>
-                      <SelectItem value="line graph">Line Graph</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="dataValues"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Data Values (JSON)</FormLabel>
-                  <FormControl>
-                    <Textarea placeholder="Enter your data in JSON format" className="h-40 font-mono" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit" disabled={isLoading} className="bg-primary hover:bg-primary/90">
-              {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Wand2 className="mr-2 h-4 w-4" />}
-              Generate Visualization
-            </Button>
-          </form>
-        </Form>
-        <div className="flex flex-col rounded-lg border bg-muted/30 p-4">
-            <h3 className="mb-2 font-semibold text-foreground">Generated Insights</h3>
-            {isLoading ? (
-                <div className="flex flex-1 items-center justify-center">
-                    <div className="text-center">
-                        <Loader2 className="mx-auto mb-2 h-8 w-8 animate-spin text-primary" />
-                        <p className="text-muted-foreground">Generating... Please wait.</p>
-                    </div>
-                </div>
-            ) : result ? (
-                <div className="prose prose-sm max-w-none text-muted-foreground">{result}</div>
-            ) : (
-                <div className="flex flex-1 items-center justify-center">
-                    <p className="text-center text-muted-foreground">Your AI-generated visualization summary will appear here.</p>
-                </div>
-            )}
+    <div className="p-4 md:p-6 space-y-6">
+        <h1 className="text-3xl font-bold">Data Visualization</h1>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Left Column */}
+            <div className="lg:col-span-1 flex flex-col gap-6">
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Date Range</CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex gap-2">
+                        <Button variant="secondary" className="flex-1">Last 30 days</Button>
+                        <Button variant="ghost" className="flex-1">Last 6 months</Button>
+                    </CardContent>
+                </Card>
+                 <Card>
+                    <CardHeader className="flex flex-row items-center justify-between">
+                        <CardTitle>District</CardTitle>
+                        <Select defaultValue="kutch">
+                            <SelectTrigger className="w-32">
+                                <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="kutch">Custom</SelectItem>
+                                <SelectItem value="all">All Districts</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                        {districts.map(district => (
+                             <div key={district.id} className="flex items-center gap-3">
+                                <div className={`w-4 h-4 rounded-sm ${district.color}`}></div>
+                                <Label htmlFor={district.id} className="flex-1 font-normal">{district.name}</Label>
+                                <Checkbox id={district.id} />
+                            </div>
+                        ))}
+                    </CardContent>
+                </Card>
+                 <Card>
+                    <CardHeader>
+                        <CardTitle>Threat Type Distribution</CardTitle>
+                    </CardHeader>
+                    <CardContent className="h-64">
+                         <ResponsiveContainer width="100%" height="100%">
+                            <PieChart>
+                                <Pie
+                                    data={threatTypeData}
+                                    cx="50%"
+                                    cy="50%"
+                                    labelLine={false}
+                                    innerRadius={60}
+                                    outerRadius={80}
+                                    fill="#8884d8"
+                                    paddingAngle={5}
+                                    dataKey="value"
+                                >
+                                    {threatTypeData.map((entry, index) => (
+                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                    ))}
+                                </Pie>
+                                <Tooltip
+                                    contentStyle={{backgroundColor: 'hsl(var(--background))', border: '1px solid hsl(var(--border))', borderRadius: 'var(--radius)'}}
+                                />
+                                <Legend iconType="circle" formatter={(value, entry) => <span className="text-foreground">{value}</span>} />
+                            </PieChart>
+                        </ResponsiveContainer>
+                    </CardContent>
+                </Card>
+            </div>
+            
+            {/* Right Column */}
+            <div className="lg:col-span-2 flex flex-col gap-6">
+                 <Card>
+                    <CardHeader>
+                        <CardTitle>Threat Frequency by Month</CardTitle>
+                    </CardHeader>
+                    <CardContent className="h-80">
+                         <ResponsiveContainer width="100%" height="100%">
+                            <BarChart data={threatFrequencyData}>
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border) / 0.5)" />
+                                <XAxis dataKey="month" fontSize={12} tickLine={false} axisLine={false} stroke="hsl(var(--muted-foreground))" />
+                                <YAxis fontSize={12} tickLine={false} axisLine={false} stroke="hsl(var(--muted-foreground))" />
+                                <Tooltip
+                                    contentStyle={{backgroundColor: 'hsl(var(--background))', border: '1px solid hsl(var(--border))', borderRadius: 'var(--radius)'}}
+                                    cursor={{fill: 'hsl(var(--muted) / 0.3)'}}
+                                />
+                                <Legend iconType="square" iconSize={10} />
+                                <Bar dataKey="Low Alerts / All Alerts" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </CardContent>
+                </Card>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Historical Alert Hotspots</CardTitle>
+                    </CardHeader>
+                    <CardContent className="aspect-video p-0 rounded-b-lg overflow-hidden">
+                        <LeafletMap />
+                    </CardContent>
+                </Card>
+            </div>
         </div>
-      </CardContent>
-    </Card>
+    </div>
   );
 }
+
+    
