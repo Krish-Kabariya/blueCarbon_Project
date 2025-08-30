@@ -35,7 +35,7 @@ const densityColors: Record<string, {color: string, label: string}> = {
 };
 
 const ColorLegend = () => (
-  <Card className="absolute bottom-4 left-1/2 -translate-x-1/2 z-[1000] w-auto bg-background/80 backdrop-blur-sm">
+  <Card className="absolute top-4 right-4 z-[1000] w-auto bg-background/80 backdrop-blur-sm">
     <CardHeader className="p-2">
       <CardTitle className="text-sm text-center">Mangrove Density</CardTitle>
     </CardHeader>
