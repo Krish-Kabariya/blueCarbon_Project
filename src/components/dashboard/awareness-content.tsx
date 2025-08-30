@@ -164,7 +164,7 @@ export function AwarenessContent() {
             <div className="mt-4 p-4 bg-muted rounded-lg">
                 <h3 className="font-semibold text-foreground truncate">{newsItems[current].title}</h3>
                 <p className="text-sm text-muted-foreground">{newsItems[current].source}</p>
-                <p className="text-xs text-muted-foreground/80 mt-1">{newsİtems[current].date}</p>
+                <p className="text-xs text-muted-foreground/80 mt-1">{newsItems[current].date}</p>
             </div>
         )}
       </section>
