@@ -18,6 +18,7 @@ interface MangroveProperties {
 const LeafletMap = () => {
   const [geoJsonData, setGeoJsonData] = useState<FeatureCollection | null>(null);
   const position: [number, number] = [21.5, 71.5]; // Centered on Gujarat
+  const maptilerApiKey = process.env.NEXT_PUBLIC_MAPTILER_API_KEY;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,6 +60,15 @@ const LeafletMap = () => {
     });
   };
 
+  const tileUrl = maptilerApiKey 
+    ? `https://api.maptiler.com/maps/dataviz/{z}/{x}/{y}.png?key=${maptilerApiKey}`
+    : "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
+
+  const attribution = maptilerApiKey
+    ? '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
+    : '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+
+
   return (
     <div className="relative h-full w-full">
       <MapContainer
@@ -67,8 +77,8 @@ const LeafletMap = () => {
         style={{ height: '100%', width: '100%', backgroundColor: '#1a1a1a' }}
       >
         <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+          url={tileUrl}
+          attribution={attribution}
         />
         {geoJsonData && (
           <GeoJSON 
