@@ -13,9 +13,9 @@ import {
 } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge";
 import { Map, Bell, FileText, Download, Eye } from "lucide-react";
-import dynamic from 'next/dynamic';
 import { getDashboardAlerts, getDashboardReports, seedInitialData } from "@/lib/services/dashboard";
 import Link from "next/link";
+import DynamicMap from "@/components/dashboard/dynamic-map";
 
 
 // Seed data on first load in a development environment.
@@ -23,11 +23,6 @@ import Link from "next/link";
 if (process.env.NODE_ENV === 'development') {
   seedInitialData();
 }
-
-const LeafletMap = dynamic(() => import('@/components/dashboard/leaflet-map'), {
-  ssr: false,
-  loading: () => <div className="flex h-full w-full items-center justify-center bg-gray-200"><p>Loading Map...</p></div>
-});
 
 export default async function DashboardPage() {
   
@@ -47,7 +42,7 @@ export default async function DashboardPage() {
           <Card className="mt-4">
             <CardContent className="p-0">
                <div className="relative rounded-lg overflow-hidden aspect-video">
-                  <LeafletMap />
+                  <DynamicMap />
               </div>
             </CardContent>
           </Card>
