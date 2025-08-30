@@ -154,7 +154,7 @@ export function DashboardHeader() {
             </SidebarTrigger>
         </div>
 
-        <div className="flex flex-1 items-center justify-end gap-4">
+        <div className="flex flex-1 items-center justify-center gap-4">
             <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
               <PopoverAnchor asChild>
                 <form onSubmit={handleSearch} className="relative" ref={searchInputRef}>
@@ -162,7 +162,7 @@ export function DashboardHeader() {
                     <Input 
                       name="query" 
                       placeholder="Search..." 
-                      className="w-full sm:w-48 md:w-72 pl-10" 
+                      className="w-full sm:w-48 md:w-72 lg:w-96 pl-10" 
                       onChange={handleInputChange}
                       onFocus={() => {
                         if (searchResults && searchResults.results.length > 0) {
@@ -209,6 +209,9 @@ export function DashboardHeader() {
                 )}
               </PopoverContent>
             </Popover>
+        </div>
+
+        <div className="flex items-center gap-4">
             <ThemeToggle />
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
