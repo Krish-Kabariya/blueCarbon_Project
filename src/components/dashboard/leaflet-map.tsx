@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, CircleMarker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, CircleMarker, Popup, Marker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
@@ -29,7 +29,7 @@ interface MangroveProperties {
 
 const LeafletMap = () => {
   const [mangroveData, setMangroveData] = useState<MangroveProperties[]>([]);
-  const position: [number, number] = [20.5937, 78.9629]; // Centered on India
+  const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
   const maptilerApiKey = process.env.NEXT_PUBLIC_MAPTILER_API_KEY;
 
   useEffect(() => {
@@ -48,6 +48,18 @@ const LeafletMap = () => {
     };
 
     fetchData();
+
+    // Fetch user's live location
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserLocation([position.coords.latitude, position.coords.longitude]);
+        },
+        (error) => {
+          console.error("Error getting user location:", error);
+        }
+      );
+    }
   }, []);
 
   const getStyle = (density: string) => {
@@ -71,11 +83,13 @@ const LeafletMap = () => {
     ? '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
     : '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
+  const position: [number, number] = userLocation || [20.5937, 78.9629]; // Center on user location or India
+
   return (
     <div className="relative h-full w-full">
       <MapContainer
         center={position}
-        zoom={5}
+        zoom={userLocation ? 13 : 5}
         style={{ height: '100%', width: '100%', backgroundColor: '#1a1a1a' }}
       >
         <TileLayer
@@ -103,6 +117,11 @@ const LeafletMap = () => {
             </Popup>
           </CircleMarker>
         ))}
+         {userLocation && (
+          <Marker position={userLocation}>
+            <Popup>You are here.</Popup>
+          </Marker>
+        )}
       </MapContainer>
     </div>
   );
