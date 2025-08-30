@@ -14,8 +14,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { Home, Bell, Map, BookOpen, BarChart } from "lucide-react";
+import { Home, Bell, Map, BookOpen, BarChart, Menu } from "lucide-react";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 
 export default function DashboardLayout({
@@ -32,8 +33,11 @@ export default function DashboardLayout({
         <Sidebar>
           <SidebarContent>
             <SidebarGroup>
-              <SidebarGroupLabel>
-                CoastalWatch
+              <SidebarGroupLabel className="flex items-center justify-between">
+                <span className="group-data-[collapsible=icon]:hidden">CoastalWatch</span>
+                <SidebarTrigger>
+                  <Menu />
+                </SidebarTrigger>
               </SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
