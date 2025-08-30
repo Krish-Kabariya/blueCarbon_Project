@@ -27,14 +27,18 @@ L.Icon.Default.mergeOptions({
 
 // Sample data - in a real app, this would come from an API
 const threatData = [
-  { id: 1, lat: 21.2, lng: 72.8, type: 'Hurricane', severity: 'Warning', name: 'Hurricane Tauktae', details: 'Category 3 hurricane making landfall soon.' },
-  { id: 2, lat: 12.9, lng: 80.2, type: 'Tsunami', severity: 'Watch', name: 'Tsunami Watch', details: 'Earthquake detected in the Indian Ocean.' },
-  { id: 3, lat: 19.0, lng: 72.8, type: 'Storm Surge', severity: 'Advisory', name: 'High Tide Advisory', details: 'High tides expected, minor coastal flooding possible.' },
-  { id: 4, lat: 22.5, lng: 88.3, type: 'Water Quality', severity: 'Advisory', name: 'Algal Bloom', details: 'Harmful algal bloom detected.' },
-  { id: 5, lat: 8.5, lng: 76.9, type: 'High Rip Current', severity: 'Warning', name: 'Strong Rip Currents', details: 'Dangerous rip currents, swimming not advised.' },
-  { id: 6, lat: 20.4, lng: 85.8, type: 'Cyclone', severity: 'Warning', name: 'Cyclone Fani', details: 'Severe cyclonic storm approaching the coast.' },
-  { id: 7, lat: 15.4, lng: 73.8, type: 'Water Quality', severity: 'Advisory', name: 'Industrial Runoff', details: 'Industrial runoff detected, avoid contact with water.' },
-  { id: 8, lat: 11.3, lng: 92.7, type: 'Tsunami', severity: 'Watch', name: 'Tsunami Watch', details: 'Undersea earthquake reported.' },
+  { id: 1, lat: 21.2, lng: 72.8, type: 'Hurricane', severity: 'Warning', name: 'Hurricane Tauktae', details: 'Category 3 hurricane making landfall soon.', date: '2023-05-17T00:00:00Z' },
+  { id: 2, lat: 12.9, lng: 80.2, type: 'Tsunami', severity: 'Watch', name: 'Tsunami Watch', details: 'Earthquake detected in the Indian Ocean.', date: '2023-12-26T00:00:00Z' },
+  { id: 3, lat: 19.0, lng: 72.8, type: 'Storm Surge', severity: 'Advisory', name: 'High Tide Advisory', details: 'High tides expected, minor coastal flooding possible.', date: '2024-07-29T00:00:00Z' },
+  { id: 4, lat: 22.5, lng: 88.3, type: 'Water Quality', severity: 'Advisory', name: 'Algal Bloom', details: 'Harmful algal bloom detected.', date: '2024-08-01T00:00:00Z' },
+  { id: 5, lat: 8.5, lng: 76.9, type: 'High Rip Current', severity: 'Warning', name: 'Strong Rip Currents', details: 'Dangerous rip currents, swimming not advised.', date: '2024-08-02T00:00:00Z' },
+  { id: 6, lat: 20.4, lng: 85.8, type: 'Cyclone', severity: 'Warning', name: 'Cyclone Fani', details: 'Severe cyclonic storm approaching the coast.', date: '2023-05-03T00:00:00Z' },
+  { id: 7, lat: 15.4, lng: 73.8, type: 'Water Quality', severity: 'Advisory', name: 'Industrial Runoff', details: 'Industrial runoff detected, avoid contact with water.', date: '2024-07-15T00:00:00Z' },
+  { id: 8, lat: 11.3, lng: 92.7, type: 'Tsunami', severity: 'Watch', name: 'Tsunami Watch', details: 'Undersea earthquake reported.', date: '2024-01-11T00:00:00Z' },
+  { id: 9, lat: 28.5, lng: 77.2, type: 'Coastal Erosion', severity: 'Warning', name: 'Major Erosion Event', details: 'Significant coastline loss reported after storm.', date: '2024-08-02T00:00:00Z'},
+  { id: 10, lat: 10.8, lng: 79.8, type: 'Illegal Fishing', severity: 'Advisory', name: 'Illegal Trawling', details: 'Reports of illegal fishing trawlers in restricted zone.', date: '2023-09-10T00:00:00Z'},
+  { id: 11, lat: 16.5, lng: 80.6, type: 'Storm Surge', severity: 'Warning', name: 'Severe Storm Surge', details: 'Life-threatening storm surge expected.', date: '2024-10-25T00:00:00Z'},
+  { id: 12, lat: 22.3, lng: 70.7, type: 'Oil Spill', severity: 'Warning', name: 'Oil Spill', details: 'Oil slick reported near industrial port.', date: '2024-06-05T00:00:00Z'},
 ];
 
 const severityColors: Record<string, string> = {
@@ -67,11 +71,14 @@ const InteractiveMap = () => {
   const position: [number, number] = [20.5937, 78.9629]; // Center of India
   
   const filteredThreats = useMemo(() => {
-    if (selectedSeverity === 'all') {
-      return threatData;
-    }
-    return threatData.filter(threat => threat.severity.toLowerCase() === selectedSeverity);
-  }, [selectedSeverity]);
+    return threatData.filter(threat => {
+      const severityMatch = selectedSeverity === 'all' || threat.severity.toLowerCase() === selectedSeverity;
+      
+      const dateMatch = !date || format(new Date(threat.date), 'yyyy-MM-dd') === format(date, 'yyyy-MM-dd');
+
+      return severityMatch && dateMatch;
+    });
+  }, [selectedSeverity, date]);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-4 h-full">
@@ -181,6 +188,7 @@ const InteractiveMap = () => {
                     <p className="text-sm m-0"><strong>Type:</strong> {threat.type}</p>
                     <p className="text-sm m-0"><strong>Severity:</strong> <span style={{color: severityColors[threat.severity]}}>{threat.severity}</span></p>
                     <p className="text-xs mt-2">{threat.details}</p>
+                    <p className="text-xs m-0 mt-1"><strong>Date:</strong> {format(new Date(threat.date), "PPP")}</p>
                 </div>
               </Popup>
             </CircleMarker>
@@ -193,3 +201,5 @@ const InteractiveMap = () => {
 };
 
 export default InteractiveMap;
+
+    
