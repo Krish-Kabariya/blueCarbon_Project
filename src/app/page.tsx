@@ -67,7 +67,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-3 lg:gap-12">
+            <div className="mx-auto grid max-w-5xl items-start justify-center gap-6 py-12 lg:grid-cols-3 lg:gap-12">
               <Card>
                 <CardHeader className="items-center">
                    <div className="mb-4 rounded-full bg-primary/10 p-4">
@@ -107,7 +107,7 @@ export default function Home() {
 
         {/* About Section */}
         <section id="about" className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container grid items-center justify-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-10">
+          <div className="container grid items-center justify-center gap-10 px-4 md:px-6 lg:grid-cols-2">
             <div className="space-y-4">
               <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
                 Our Mission: A Resilient Coast for a Thriving Planet
