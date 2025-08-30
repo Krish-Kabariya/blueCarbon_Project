@@ -81,142 +81,6 @@
       "density": "low"
     },
     {
-      "state": "Maharashtra",
-      "city": "Raigad",
-      "latitude": 18.514,
-      "longitude": 73.08,
-      "mangrove_cover_sq_km": 94.0,
-      "density": "medium"
-    },
-    {
-      "state": "Maharashtra",
-      "city": "Thane",
-      "latitude": 19.218,
-      "longitude": 72.978,
-      "mangrove_cover_sq_km": 81.3,
-      "density": "medium"
-    },
-    {
-      "state": "Maharashtra",
-      "city": "Ratnagiri",
-      "latitude": 16.994,
-      "longitude": 73.312,
-      "mangrove_cover_sq_km": 64.9,
-      "density": "medium"
-    },
-    {
-      "state": "Maharashtra",
-      "city": "Sindhudurg",
-      "latitude": 16.353,
-      "longitude": 73.558,
-      "mangrove_cover_sq_km": 47.9,
-      "density": "medium"
-    },
-    {
-      "state": "Maharashtra",
-      "city": "Mumbai Suburban",
-      "latitude": 19.12,
-      "longitude": 72.87,
-      "mangrove_cover_sq_km": 36.8,
-      "density": "medium"
-    },
-    {
-      "state": "Maharashtra",
-      "city": "Mumbai City",
-      "latitude": 19.076,
-      "longitude": 72.877,
-      "mangrove_cover_sq_km": 1.1,
-      "density": "low"
-    },
-    {
-      "state": "Andhra Pradesh",
-      "city": "East Godavari",
-      "latitude": 16.923,
-      "longitude": 82.01,
-      "mangrove_cover_sq_km": 260.6,
-      "density": "high"
-    },
-    {
-      "state": "Andhra Pradesh",
-      "city": "Krishna",
-      "latitude": 16.155,
-      "longitude": 81.13,
-      "mangrove_cover_sq_km": 105.3,
-      "density": "high"
-    },
-    {
-      "state": "Andhra Pradesh",
-      "city": "Guntur",
-      "latitude": 16.306,
-      "longitude": 80.436,
-      "mangrove_cover_sq_km": 28.5,
-      "density": "medium"
-    },
-    {
-      "state": "Andhra Pradesh",
-      "city": "Nellore",
-      "latitude": 14.442,
-      "longitude": 79.986,
-      "mangrove_cover_sq_km": 4.1,
-      "density": "low"
-    },
-    {
-      "state": "Andhra Pradesh",
-      "city": "West Godavari",
-      "latitude": 16.74,
-      "longitude": 81.14,
-      "mangrove_cover_sq_km": 1.2,
-      "density": "low"
-    },
-    {
-      "state": "Tamil Nadu",
-      "city": "Cuddalore",
-      "latitude": 11.75,
-      "longitude": 79.75,
-      "mangrove_cover_sq_km": 22.8,
-      "density": "medium"
-    },
-    {
-      "state": "Tamil Nadu",
-      "city": "Ramanathapuram",
-      "latitude": 9.363,
-      "longitude": 78.835,
-      "mangrove_cover_sq_km": 8.7,
-      "density": "low"
-    },
-    {
-      "state": "Tamil Nadu",
-      "city": "Nagapattinam",
-      "latitude": 10.76,
-      "longitude": 79.84,
-      "mangrove_cover_sq_km": 4.8,
-      "density": "low"
-    },
-    {
-      "state": "Tamil Nadu",
-      "city": "Thanjavur",
-      "latitude": 10.787,
-      "longitude": 79.137,
-      "mangrove_cover_sq_km": 2.1,
-      "density": "low"
-    },
-    {
-      "state": "Goa",
-      "city": "North Goa",
-      "latitude": 15.54,
-      "longitude": 73.83,
-      "mangrove_cover_sq_km": 20.3,
-      "density": "medium"
-    },
-    {
-      "state": "Goa",
-      "city": "South Goa",
-      "latitude": 15.27,
-      "longitude": 73.98,
-      "mangrove_cover_sq_km": 6.7,
-      "density": "low"
-    },
-    {
       "state": "Karnataka",
       "city": "Uttara Kannada",
       "latitude": 14.54,
@@ -266,58 +130,11 @@
     },
     {
       "state": "Gujarat",
-      "city": "Ahmedabad",
-      "latitude": 23.0225,
-      "longitude": 72.5714,
-      "mangrove_cover_sq_km": 26.38,
-      "density": "low",
-      "moderately_dense_km2": 0.71,
-      "open_km2": 25.67,
-      "pct_moderate": 2.69
-    },
-    {
-      "state": "Gujarat",
-      "city": "Amreli",
-      "latitude": 21.6033,
-      "longitude": 71.2222,
-      "mangrove_cover_sq_km": 2.61,
-      "density": "low",
-      "moderately_dense_km2": 0,
-      "open_km2": 2.61,
-      "pct_moderate": 0
-    },
-    {
-      "state": "Gujarat",
-      "city": "Anand",
-      "latitude": 22.5645,
-      "longitude": 72.9649,
-      "mangrove_cover_sq_km": 5.72,
-      "density": "low",
-      "moderately_dense_km2": 0,
-      "open_km2": 5.72,
-      "pct_moderate": 0
-    },
-    {
-      "state": "Gujarat",
-      "city": "Bharuch",
-      "latitude": 21.6953,
-      "longitude": 72.9784,
-      "mangrove_cover_sq_km": 45.38,
-      "density": "medium",
-      "moderately_dense_km2": 13.33,
-      "open_km2": 32.05,
-      "pct_moderate": 29.37
-    },
-    {
-      "state": "Gujarat",
-      "city": "Bhavnagar",
-      "latitude": 21.7645,
-      "longitude": 72.1519,
-      "mangrove_cover_sq_km": 21.07,
-      "density": "medium",
-      "moderately_dense_km2": 5.84,
-      "open_km2": 15.23,
-      "pct_moderate": 27.72
+      "city": "Kachchh",
+      "latitude": 23.7337,
+      "longitude": 69.8597,
+      "mangrove_cover_sq_km": 798.74,
+      "density": "high"
     },
     {
       "state": "Gujarat",
@@ -325,65 +142,31 @@
       "latitude": 22.4707,
       "longitude": 70.0577,
       "mangrove_cover_sq_km": 231.26,
-      "density": "medium",
-      "moderately_dense_km2": 28.06,
-      "open_km2": 203.2,
-      "pct_moderate": 12.13
+      "density": "high"
     },
     {
       "state": "Gujarat",
-      "city": "Junagadh",
-      "latitude": 21.5222,
-      "longitude": 70.4579,
-      "mangrove_cover_sq_km": 3.91,
-      "density": "low",
-      "moderately_dense_km2": 0,
-      "open_km2": 3.91,
-      "pct_moderate": 0
+      "city": "Bharuch",
+      "latitude": 21.6953,
+      "longitude": 72.9784,
+      "mangrove_cover_sq_km": 45.38,
+      "density": "medium"
     },
     {
       "state": "Gujarat",
-      "city": "Kachchh",
-      "latitude": 23.7337,
-      "longitude": 69.8597,
-      "mangrove_cover_sq_km": 798.74,
-      "density": "medium",
-      "moderately_dense_km2": 116.14,
-      "open_km2": 682.6,
-      "pct_moderate": 14.54
+      "city": "Ahmedabad",
+      "latitude": 23.0225,
+      "longitude": 72.5714,
+      "mangrove_cover_sq_km": 26.38,
+      "density": "medium"
     },
     {
       "state": "Gujarat",
-      "city": "Navsari",
-      "latitude": 20.9525,
-      "longitude": 72.9333,
-      "mangrove_cover_sq_km": 11.15,
-      "density": "low",
-      "moderately_dense_km2": 0,
-      "open_km2": 11.15,
-      "pct_moderate": 0
-    },
-    {
-      "state": "Gujarat",
-      "city": "Porbandar",
-      "latitude": 21.6417,
-      "longitude": 69.6293,
-      "mangrove_cover_sq_km": 1,
-      "density": "low",
-      "moderately_dense_km2": 0,
-      "open_km2": 1,
-      "pct_moderate": 0
-    },
-    {
-      "state": "Gujarat",
-      "city": "Rajkot",
-      "latitude": 22.3039,
-      "longitude": 70.8022,
-      "mangrove_cover_sq_km": 3.53,
-      "density": "medium",
-      "moderately_dense_km2": 0.9,
-      "open_km2": 2.63,
-      "pct_moderate": 25.5
+      "city": "Bhavnagar",
+      "latitude": 21.7645,
+      "longitude": 72.1519,
+      "mangrove_cover_sq_km": 21.07,
+      "density": "medium"
     },
     {
       "state": "Gujarat",
@@ -391,21 +174,55 @@
       "latitude": 21.1702,
       "longitude": 72.8311,
       "mangrove_cover_sq_km": 19.32,
-      "density": "medium",
-      "moderately_dense_km2": 3.87,
-      "open_km2": 15.45,
-      "pct_moderate": 20.03
+      "density": "medium"
+    },
+    {
+      "state": "Gujarat",
+      "city": "Navsari",
+      "latitude": 20.9525,
+      "longitude": 72.9333,
+      "mangrove_cover_sq_km": 11.15,
+      "density": "low"
+    },
+    {
+      "state": "Gujarat",
+      "city": "Anand",
+      "latitude": 22.5645,
+      "longitude": 72.9649,
+      "mangrove_cover_sq_km": 5.72,
+      "density": "low"
+    },
+    {
+      "state": "Gujarat",
+      "city": "Junagadh",
+      "latitude": 21.5222,
+      "longitude": 70.4579,
+      "mangrove_cover_sq_km": 3.91,
+      "density": "low"
+    },
+    {
+      "state": "Gujarat",
+      "city": "Rajkot",
+      "latitude": 22.3039,
+      "longitude": 70.8022,
+      "mangrove_cover_sq_km": 3.53,
+      "density": "low"
     },
     {
       "state": "Gujarat",
       "city": "Vadodara",
-      "latitude": 22.3039,
+      "latitude": 22.3072,
       "longitude": 73.1812,
       "mangrove_cover_sq_km": 2.98,
-      "density": "low",
-      "moderately_dense_km2": 0,
-      "open_km2": 2.98,
-      "pct_moderate": 0
+      "density": "low"
+    },
+    {
+      "state": "Gujarat",
+      "city": "Amreli",
+      "latitude": 21.6041,
+      "longitude": 71.223,
+      "mangrove_cover_sq_km": 2.61,
+      "density": "low"
     },
     {
       "state": "Gujarat",
@@ -413,10 +230,119 @@
       "latitude": 20.6033,
       "longitude": 72.9329,
       "mangrove_cover_sq_km": 2.02,
-      "density": "low",
-      "moderately_dense_km2": 0,
-      "open_km2": 2.02,
-      "pct_moderate": 0
+      "density": "low"
+    },
+    {
+      "state": "Gujarat",
+      "city": "Porbandar",
+      "latitude": 21.6417,
+      "longitude": 69.6293,
+      "mangrove_cover_sq_km": 1,
+      "density": "low"
+    },
+    {
+      "state": "Andhra Pradesh",
+      "city": "East Godavari",
+      "latitude": 16.923,
+      "longitude": 82.01,
+      "mangrove_cover_sq_km": 187.8,
+      "density": "high"
+    },
+    {
+      "state": "Andhra Pradesh",
+      "city": "Krishna",
+      "latitude": 16.155,
+      "longitude": 81.13,
+      "mangrove_cover_sq_km": 137.8,
+      "density": "high"
+    },
+    {
+      "state": "Andhra Pradesh",
+      "city": "Guntur",
+      "latitude": 16.306,
+      "longitude": 80.436,
+      "mangrove_cover_sq_km": 68,
+      "density": "medium"
+    },
+    {
+      "state": "Andhra Pradesh",
+      "city": "Sri Potti Sriamulu Nellore",
+      "latitude": 14.4426,
+      "longitude": 79.9865,
+      "mangrove_cover_sq_km": 10.2,
+      "density": "low"
+    },
+    {
+      "state": "Andhra Pradesh",
+      "city": "Prakasam",
+      "latitude": 15.505,
+      "longitude": 79.25,
+      "mangrove_cover_sq_km": 1,
+      "density": "low"
+    },
+    {
+      "state": "Goa",
+      "city": "North Goa",
+      "latitude": 15.5409,
+      "longitude": 73.8826,
+      "mangrove_cover_sq_km": 20.2,
+      "density": "medium"
+    },
+    {
+      "state": "Goa",
+      "city": "South Goa",
+      "latitude": 15.2753,
+      "longitude": 73.9833,
+      "mangrove_cover_sq_km": 7.2,
+      "density": "low"
+    },
+    {
+      "state": "Tamil Nadu",
+      "city": "Tiruvarur",
+      "latitude": 10.771,
+      "longitude": 79.636,
+      "mangrove_cover_sq_km": 21.4,
+      "density": "medium"
+    },
+    {
+      "state": "Tamil Nadu",
+      "city": "Thanjavur",
+      "latitude": 10.787,
+      "longitude": 79.1378,
+      "mangrove_cover_sq_km": 20.6,
+      "density": "medium"
+    },
+    {
+      "state": "Tamil Nadu",
+      "city": "Chennai",
+      "latitude": 13.0827,
+      "longitude": 80.2707,
+      "mangrove_cover_sq_km": 1.4,
+      "density": "low"
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Raigad",
+      "latitude": 18.514,
+      "longitude": 73.08,
+      "mangrove_cover_sq_km": 127,
+      "density": "high"
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Mumbai Suburban",
+      "latitude": 19.12,
+      "longitude": 72.87,
+      "mangrove_cover_sq_km": 63.2,
+      "density": "medium"
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Mumbai City",
+      "latitude": 19.076,
+      "longitude": 72.8777,
+      "mangrove_cover_sq_km": 2,
+      "density": "low"
     }
   ]
 }
