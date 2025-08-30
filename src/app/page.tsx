@@ -54,14 +54,6 @@ export default function Home() {
             <p className="mx-auto mt-4 max-w-[700px] text-muted-foreground md:text-xl">
               CoastalWatch provides real-time threat alerts, data visualization, and community awareness to safeguard our vital coastal environments.
             </p>
-            <div className="mt-6 flex flex-col gap-2 min-[400px]:flex-row justify-center">
-              <Button asChild size="lg">
-                <Link href="/dashboard">Menu</Link>
-              </Button>
-              <Button asChild variant="outline" size="lg">
-                 <Link href="/awareness">Learn More</Link>
-              </Button>
-            </div>
           </div>
         </section>
 
