@@ -20,10 +20,10 @@ const threatsByDayData = [
 ];
 
 const threatsBySeverityData = [
-  { name: 'Critical', threats: 80, fill: "hsl(var(--destructive))" },
-  { name: 'High', threats: 120, fill: "hsl(var(--chart-1))" },
-  { name: 'Medium', threats: 70, fill: "hsl(var(--chart-4))" },
-  { name: 'Low', threats: 150, fill: "hsl(var(--chart-2))" },
+  { name: 'Critical', threats: 80 },
+  { name: 'High', threats: 120 },
+  { name: 'Medium', threats: 70 },
+  { name: 'Low', threats: 150 },
 ];
 
 const summaryData = [
@@ -34,11 +34,11 @@ const summaryData = [
 ];
 
 const maliciousIpData = [
-  { ip: 'Mart14', threats: 1, country: 'Nedium' },
-  { ip: 'Mireda', threats: 1, country: 'Austion' },
-  { ip: 'Cenoun', threats: 3, country: 'Burdiom' },
-  { ip: 'Hematar', threats: 5, country: 'Mediom' },
-  { ip: 'Masdy', threats: 2, country: 'Nestinp' },
+  { ip: '192.168.1.14', threats: 15, country: 'USA' },
+  { ip: '10.0.0.5', threats: 12, country: 'Canada' },
+  { ip: '172.16.0.10', threats: 8, country: 'Mexico' },
+  { ip: '203.0.113.7', threats: 5, country: 'Brazil' },
+  { ip: '198.51.100.2', threats: 2, country: 'Argentina' },
 ];
 
 
@@ -90,9 +90,9 @@ export default function ReportDetailPage({ params }: { params: { id: string } })
             <CardHeader>
                 <CardTitle>Threats Detected by Day</CardTitle>
             </CardHeader>
-            <CardContent className="h-[300px]">
+            <CardContent className="h-[300px] p-0">
                 <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={threatsByDayData} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
+                    <AreaChart data={threatsByDayData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                         <defs>
                             <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="5%" stopColor="hsl(var(--chart-1))" stopOpacity={0.8}/>
@@ -112,18 +112,18 @@ export default function ReportDetailPage({ params }: { params: { id: string } })
             <CardHeader>
                 <CardTitle>Threats by Severity</CardTitle>
             </CardHeader>
-            <CardContent className="h-[300px]">
+            <CardContent className="h-[300px] p-0">
                 <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={threatsBySeverityData} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
+                <BarChart data={threatsBySeverityData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border) / 0.5)" />
                     <XAxis dataKey="name" stroke="hsl(var(--muted-foreground))" fontSize={12} tickLine={false} axisLine={false} />
                     <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} tickLine={false} axisLine={false} />
                     <Tooltip cursor={{fill: 'hsl(var(--muted) / 0.3)'}} contentStyle={{backgroundColor: 'hsl(var(--background))', border: '1px solid hsl(var(--border))', borderRadius: 'var(--radius)'}}/>
                     <Legend iconType="circle" iconSize={8} />
-                    <Bar dataKey="threats" name="Critical" fill="hsl(var(--destructive))" radius={[4, 4, 0, 0]} />
-                    <Bar dataKey="threats" name="High" fill="hsl(var(--chart-1))" radius={[4, 4, 0, 0]} />
-                    <Bar dataKey="threats" name="Medium" fill="hsl(var(--chart-4))" radius={[4, 4, 0, 0]} />
-                    <Bar dataKey="threats" name="Low" fill="hsl(var(--chart-2))" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="threats" fill="hsl(var(--destructive))" name="Critical" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="threats" fill="hsl(var(--chart-1))" name="High" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="threats" fill="hsl(var(--chart-4))" name="Medium" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="threats" fill="hsl(var(--chart-2))" name="Low" radius={[4, 4, 0, 0]} />
                 </BarChart>
                 </ResponsiveContainer>
             </CardContent>
@@ -133,7 +133,7 @@ export default function ReportDetailPage({ params }: { params: { id: string } })
             <CardHeader>
                 <CardTitle>Summary</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 pt-6">
                 {summaryData.map(item => (
                     <div key={item.label} className="flex items-center">
                         <div className="h-2.5 w-2.5 rounded-full mr-3" style={{backgroundColor: item.color}} />
@@ -148,7 +148,7 @@ export default function ReportDetailPage({ params }: { params: { id: string } })
           <CardHeader>
             <CardTitle>Top 5 Malicious IP Addresses</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-6">
             <Table>
                 <TableHeader>
                     <TableRow>
@@ -173,4 +173,3 @@ export default function ReportDetailPage({ params }: { params: { id: string } })
     </div>
   );
 }
-
