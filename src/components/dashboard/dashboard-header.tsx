@@ -141,10 +141,10 @@ export function DashboardHeader() {
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-background px-4 lg:h-[60px] lg:px-6 sticky top-0 z-30">
         <div className="flex items-center gap-4">
-            <SidebarTrigger className="md:hidden">
+            <SidebarTrigger>
               <Menu />
             </SidebarTrigger>
-            <h1 className="text-lg font-semibold hidden md:block">{getPageTitle()}</h1>
+            <h1 className="text-lg font-semibold">{getPageTitle()}</h1>
         </div>
 
         <div className="flex flex-1 items-center justify-end gap-4">

@@ -36,9 +36,6 @@ export default function DashboardLayout({
             <SidebarGroup>
               <SidebarGroupLabel className="flex items-center justify-between">
                 <span className="group-data-[collapsible=icon]:hidden">CoastalWatch</span>
-                <SidebarTrigger>
-                  <Menu />
-                </SidebarTrigger>
               </SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
