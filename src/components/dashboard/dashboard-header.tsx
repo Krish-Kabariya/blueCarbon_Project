@@ -7,9 +7,9 @@ import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from "@/components/ui/input";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Search, LogOut, Loader2, File, AlertCircle, Menu } from "lucide-react";
-import { searchAction } from '@/app/actions';
-import { FormEvent, useState, useRef, useEffect } from 'react';
+import { Search, LogOut, Loader2, File, AlertCircle, Menu, MapPin } from "lucide-react";
+import { searchAction, suggestSearchAction } from '@/app/actions';
+import { FormEvent, useState, useRef, useEffect, useCallback } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { SearchOutput } from '@/ai/flows/search';
 import { Popover, PopoverContent, PopoverTrigger, PopoverAnchor } from '@/components/ui/popover';
@@ -17,6 +17,7 @@ import Link from 'next/link';
 import { auth } from '@/lib/firebase';
 import { signOut, onAuthStateChanged, User } from 'firebase/auth';
 import { ThemeToggle } from '../ui/theme-toggle';
+import { useDebounce } from 'use-debounce';
 
 
 export function DashboardHeader() {
@@ -24,10 +25,14 @@ export function DashboardHeader() {
   const router = useRouter();
   const { toast } = useToast();
   const [isSearching, setIsSearching] = useState(false);
+  const [isSuggesting, setIsSuggesting] = useState(false);
   const [searchResults, setSearchResults] = useState<SearchOutput | null>(null);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const [user, setUser] = useState<User | null>(auth.currentUser);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedSearchQuery] = useDebounce(searchQuery, 300);
 
 
   useEffect(() => {
@@ -57,22 +62,18 @@ export function DashboardHeader() {
     }
   };
 
-  const handleSearch = async (event: FormEvent<HTMLFormElement> | string) => {
-    if(typeof event !== 'string') {
-      event.preventDefault();
-    }
-    
-    const query = typeof event === 'string' ? event : (new FormData(event.currentTarget)).get('query') as string;
-
+  const handleSearch = async (query: string) => {
     if (!query.trim()) {
-        setSearchResults(null);
-        setIsPopoverOpen(false);
-        return;
+      setSearchResults(null);
+      setSuggestions([]);
+      setIsPopoverOpen(false);
+      return;
     }
     
     setIsSearching(true);
     setIsPopoverOpen(true);
     setSearchResults(null);
+    setSuggestions([]);
 
     const formData = new FormData();
     formData.append('query', query);
@@ -106,15 +107,55 @@ export function DashboardHeader() {
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value;
-    if (query.trim().length > 2) {
-      handleSearch(query);
-    } else {
+  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    handleSearch(searchQuery);
+  }
+
+  const handleSuggestionClick = (suggestion: string) => {
+    setSearchQuery(suggestion);
+    handleSearch(suggestion);
+    setIsPopoverOpen(false);
+  }
+
+  const handleFetchSuggestions = async (query: string) => {
+    if (!query.trim()) {
+      setSuggestions([]);
       setIsPopoverOpen(false);
-      setSearchResults(null);
+      return;
+    }
+
+    setIsSuggesting(true);
+    setSearchResults(null);
+    setIsPopoverOpen(true);
+    
+    const formData = new FormData();
+    formData.append('query', query);
+
+    try {
+      const response = await suggestSearchAction(formData);
+      if (response.suggestions) {
+        setSuggestions(response.suggestions);
+      } else {
+        setSuggestions([]);
+      }
+    } catch (error) {
+      setSuggestions([]);
+    } finally {
+      setIsSuggesting(false);
     }
   };
+  
+  useEffect(() => {
+    if (debouncedSearchQuery) {
+      handleFetchSuggestions(debouncedSearchQuery);
+    } else {
+      setSuggestions([]);
+      setSearchResults(null);
+      setIsPopoverOpen(false);
+    }
+  }, [debouncedSearchQuery]);
+
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -145,28 +186,31 @@ export function DashboardHeader() {
       });
     }
   };
+  
+  const showPopover = isPopoverOpen && (isSearching || isSuggesting || (searchResults && searchResults.results.length > 0) || suggestions.length > 0);
 
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-background px-4 lg:h-[60px] lg:px-6 sticky top-0 z-30">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 md:hidden">
             <SidebarTrigger>
               <Menu />
             </SidebarTrigger>
         </div>
 
-        <div className="flex flex-1 items-center justify-center gap-4">
-            <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
+        <div className="flex-1 flex justify-center">
+            <Popover open={showPopover} onOpenChange={setIsPopoverOpen}>
               <PopoverAnchor asChild>
-                <form onSubmit={handleSearch} className="relative" ref={searchInputRef}>
+                <form onSubmit={handleFormSubmit} className="relative w-full max-w-lg" ref={searchInputRef}>
                     <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                     <Input 
                       name="query" 
-                      placeholder="Search..." 
-                      className="w-full sm:w-48 md:w-72 lg:w-96 pl-10" 
-                      onChange={handleInputChange}
+                      placeholder="Search for pages or cities..." 
+                      className="w-full pl-10" 
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
                       onFocus={() => {
-                        if (searchResults && searchResults.results.length > 0) {
-                          setIsPopoverOpen(true);
+                        if (searchQuery) {
+                           setIsPopoverOpen(true)
                         }
                       }}
                       autoComplete="off"
@@ -174,13 +218,13 @@ export function DashboardHeader() {
                 </form>
               </PopoverAnchor>
               <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0" align="start">
-                {isSearching && (
+                {(isSearching || isSuggesting) && (
                   <div className="p-4 flex items-center gap-2 text-sm text-muted-foreground">
                     <Loader2 className="h-4 w-4 animate-spin" />
                     Searching...
                   </div>
                 )}
-                {!isSearching && searchResults && (
+                {!isSearching && !isSuggesting && searchResults && (
                   <div className="flex flex-col">
                     {searchResults.results.length > 0 ? (
                       searchResults.results.map((result, index) => (
@@ -200,6 +244,7 @@ export function DashboardHeader() {
                         </Link>
                       ))
                     ) : (
+                      (!suggestions || suggestions.length === 0) &&
                       <div className="p-4 flex items-center gap-2 text-sm text-muted-foreground">
                          <AlertCircle className="h-4 w-4" />
                         No results found.
@@ -207,11 +252,31 @@ export function DashboardHeader() {
                     )}
                   </div>
                 )}
+                {!isSearching && !isSuggesting && suggestions.length > 0 && (
+                  <div className="flex flex-col">
+                     {suggestions.map((suggestion, index) => (
+                        <button 
+                          key={index}
+                          className="flex items-center gap-3 px-4 py-2 hover:bg-muted text-left w-full"
+                          onClick={() => handleSuggestionClick(suggestion)}
+                        >
+                          <div className="bg-muted p-1.5 rounded-md">
+                            <MapPin className="h-4 w-4 text-muted-foreground" />
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium">{suggestion}</p>
+                            <p className="text-xs text-muted-foreground">City</p>
+                          </div>
+                        </button>
+                      ))}
+                  </div>
+                )}
+
               </PopoverContent>
             </Popover>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
             <ThemeToggle />
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
