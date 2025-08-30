@@ -90,15 +90,15 @@ const LeafletMap = () => {
             radius={8}
           >
             <Popup>
-              <div style="background-color: #2d3748; color: #e2e8f0; padding: 10px; border-radius: 8px; font-family: sans-serif; width: 200px;">
-                <h3 style="margin: 0 0 8px 0; font-size: 16px; border-bottom: 1px solid #4a5568; padding-bottom: 5px;">
+              <div style={{backgroundColor: '#2d3748', color: '#e2e8f0', padding: '10px', borderRadius: '8px', fontFamily: 'sans-serif', width: '200px'}}>
+                <h3 style={{margin: '0 0 8px 0', fontSize: '16px', borderBottom: '1px solid #4a5568', paddingBottom: '5px'}}>
                   {item.city}, {item.state}
                 </h3>
-                <p style="margin: 0 0 4px 0; font-size: 14px;"><strong>Total Cover:</strong> {item.mangrove_cover_sq_km} km²</p>
+                <p style={{margin: '0 0 4px 0', fontSize: '14px'}}><strong>Total Cover:</strong> {item.mangrove_cover_sq_km} km²</p>
                 {item.pct_moderate !== undefined && (
-                  <p style="margin: 0 0 4px 0; font-size: 14px;"><strong>Moderately Dense:</strong> {item.pct_moderate}%</p>
+                  <p style={{margin: '0 0 4px 0', fontSize: '14px'}}><strong>Moderately Dense:</strong> {item.pct_moderate}%</p>
                 )}
-                <p style="margin: 0; font-size: 14px;"><strong>Density:</strong> <span style="text-transform: capitalize;">{item.density}</span></p>
+                <p style={{margin: '0', fontSize: '14px'}}><strong>Density:</strong> <span style={{textTransform: 'capitalize'}}>{item.density}</span></p>
               </div>
             </Popup>
           </CircleMarker>
