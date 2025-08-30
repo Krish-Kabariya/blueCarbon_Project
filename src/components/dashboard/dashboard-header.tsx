@@ -27,7 +27,7 @@ export function DashboardHeader() {
   const [searchResults, setSearchResults] = useState<SearchOutput | null>(null);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(auth.currentUser);
 
 
   useEffect(() => {
@@ -226,8 +226,8 @@ export function DashboardHeader() {
                 <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="relative h-10 w-10 rounded-full">
                         <Avatar>
-                            <AvatarImage src={user?.photoURL ?? "https://picsum.photos/100/100"} alt="User" />
-                            <AvatarFallback>{user?.displayName?.charAt(0) ?? 'U'}</AvatarFallback>
+                            <AvatarImage src={user?.photoURL ?? "https://picsum.photos/100/100"} alt={user?.displayName ?? ""} />
+                            <AvatarFallback>{user?.displayName?.charAt(0).toUpperCase() ?? 'U'}</AvatarFallback>
                         </Avatar>
                     </Button>
                 </DropdownMenuTrigger>
