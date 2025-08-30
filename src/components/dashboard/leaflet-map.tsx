@@ -18,7 +18,7 @@ L.Icon.Default.mergeOptions({
 
 const LeafletMap = () => {
   const [geoJsonData, setGeoJsonData] = useState<FeatureCollection | null>(null);
-  const position: [number, number] = [22.5, 71.0]; // Centered on Gujarat
+  const position: [number, number] = [22.3, 71.5]; // Centered on Gujarat
   const maptilerApiKey = process.env.NEXT_PUBLIC_MAPTILER_API_KEY;
 
   useEffect(() => {
@@ -39,25 +39,24 @@ const LeafletMap = () => {
   }, []);
 
   const getStyle = (feature: any) => {
-    const density = feature?.properties?.density;
-    switch (density) {
-      case 'dense':
-        return { fillColor: "#2E7D32", color: "#f0fff4", weight: 1, fillOpacity: 0.8 }; // Green
-      case 'medium':
-        return { fillColor: "#FDD835", color: "#333", weight: 1, fillOpacity: 0.8 }; // Yellow
-      case 'sparse':
-        return { fillColor: "#EF6C00", color: "#fbe9e7", weight: 1, fillOpacity: 0.8 }; // Orange/Red
+    const color = feature?.properties?.color;
+    switch (color) {
+      case 'yellow':
+        return { fillColor: "#FDD835", color: "#333", weight: 1, fillOpacity: 0.8 }; // Yellow for medium
+      case 'red':
+        return { fillColor: "#EF6C00", color: "#fbe9e7", weight: 1, fillOpacity: 0.8 }; // Orange/Red for sparse
       default:
-        return { fillColor: "#9E9E9E", color: "#fff", weight: 1, fillOpacity: 0.7 }; // Grey
+        return { fillColor: "#9E9E9E", color: "#fff", weight: 1, fillOpacity: 0.7 }; // Grey for default
     }
   };
 
   const onEachFeature = (feature: any, layer: any) => {
     if (feature.properties) {
       const popupContent = `
-        <div style="background-color: #2d3748; color: #e2e8f0; padding: 10px; border-radius: 8px;">
-          <h3 style="margin: 0 0 5px 0; font-size: 16px; border-bottom: 1px solid #4a5568; padding-bottom: 5px;">${feature.properties.Name}</h3>
-          <p style="margin: 0; font-size: 14px;">${feature.properties.Description}</p>
+        <div style="background-color: #2d3748; color: #e2e8f0; padding: 10px; border-radius: 8px; font-family: sans-serif;">
+          <h3 style="margin: 0 0 8px 0; font-size: 16px; border-bottom: 1px solid #4a5568; padding-bottom: 5px;">${feature.properties.district}</h3>
+          <p style="margin: 0 0 4px 0; font-size: 14px;"><strong>Total Area:</strong> ${feature.properties.total_km2} km²</p>
+          <p style="margin: 0; font-size: 14px;"><strong>Moderately Dense:</strong> ${feature.properties.pct_moderate}%</p>
         </div>
       `;
       layer.bindPopup(popupContent);
