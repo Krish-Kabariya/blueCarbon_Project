@@ -4,16 +4,17 @@
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, GeoJSON, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
-import "leaflet-defaulticon-compatibility";
 import type { FeatureCollection } from 'geojson';
 import L from 'leaflet';
 
-// Define the type for our GeoJSON features properties
-interface MangroveProperties {
-  Name: string;
-  Description: string;
-}
+// Fix for default markers as recommended.
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+});
+
 
 const LeafletMap = () => {
   const [geoJsonData, setGeoJsonData] = useState<FeatureCollection | null>(null);
@@ -62,12 +63,11 @@ const LeafletMap = () => {
 
   const tileUrl = maptilerApiKey 
     ? `https://api.maptiler.com/maps/dataviz/{z}/{x}/{y}.png?key=${maptilerApiKey}`
-    : "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
+    : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 
   const attribution = maptilerApiKey
     ? '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
-    : '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
-
+    : '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
   return (
     <div className="relative h-full w-full">
