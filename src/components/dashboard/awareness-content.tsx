@@ -13,37 +13,44 @@ import {
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Home, MoreVertical, BarChart4, ShieldCheck, Users, Hammer } from 'lucide-react';
+import { ChevronRight, Home, MoreVertical, BarChart4, ShieldCheck, Users, Hammer, Siren, PawPrint, Camera } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const newsItems = [
   {
-    title: "Community Meeting on Evacuation Routes",
-    source: "Local Community Channel",
-    date: "Aug 21, 2024",
-    image: "https://picsum.photos/400/225?random=5",
-    dataAiHint: "community meeting",
+    title: "How Blue Carbon Ecosystems Are Our Best Bet Against Climate Change",
+    source: "Coastal Conservation Foundation",
+    date: "Aug 23, 2024",
+    image: "https://picsum.photos/400/225?random=9",
+    dataAiHint: "mangrove forest",
   },
   {
-    title: "Scientists Publish New Coastal Resilience Study",
-    source: "Coastal Science Journal",
+    title: "Storm Surges Threaten Vital Carbon-Storing Salt Marshes",
+    source: "Climate Action Today",
+    date: "Aug 22, 2024",
+    image: "https://picsum.photos/400/225?random=10",
+    dataAiHint: "stormy coast",
+  },
+  {
+    title: "The Hidden Cost of Coastal Pollution on Carbon Sequestration",
+    source: "Environmental Science Weekly",
+    date: "Aug 21, 2024",
+    image: "https://picsum.photos/400/225?random=11",
+    dataAiHint: "coastal pollution",
+  },
+  {
+    title: "Illegal Sand Mining Erodes Coastlines and Carbon Sinks",
+    source: "Global Environmental Report",
+    date: "Aug 20, 2024",
+    image: "https://picsum.photos/400/225?random=12",
+    dataAiHint: "sand mining",
+  },
+  {
+    title: "Community-Led Initiatives to Protect Blue Carbon Habitats",
+    source: "Local Community Channel",
     date: "Aug 19, 2024",
     image: "https://picsum.photos/400/225?random=6",
     dataAiHint: "coastal research",
-  },
-  {
-    title: "New Warning System Deployed in High-Risk Areas",
-    source: "Coastal Guardian News",
-    date: "Aug 18, 2024",
-    image: "https://picsum.photos/400/225?random=7",
-    dataAiHint: "weather station",
-  },
-    {
-    title: "Understanding Rip Currents: A Swimmer's Guide",
-    source: "Ocean Safety Institute",
-    date: "Aug 17, 2024",
-    image: "https://picsum.photos/400/225?random=8",
-    dataAiHint: "ocean waves",
   },
 ];
 
@@ -75,6 +82,18 @@ const safetyTips = [
     {
         title: "Help Your Neighbors",
         icon: Users,
+    },
+    {
+        title: "Understand Warning Sirens",
+        icon: Siren,
+    },
+    {
+        title: "Protect Your Pets",
+        icon: PawPrint,
+    },
+    {
+        title: "Document Your Belongings",
+        icon: Camera,
     },
 ];
 
@@ -175,7 +194,7 @@ export function AwarenessContent() {
            <Carousel opts={{ align: "start", loop: true }} className="w-full">
               <CarouselContent>
                 {safetyTips.map((tip, index) => (
-                  <CarouselItem key={index} className="basis-full">
+                  <CarouselItem key={index} className="basis-full sm:basis-1/2 lg:basis-1/3">
                     <Card>
                       <CardContent className="flex items-center justify-between p-4">
                         <div className="flex items-center gap-3">
