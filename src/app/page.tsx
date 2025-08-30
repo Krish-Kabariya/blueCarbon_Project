@@ -117,12 +117,12 @@ export default function Home() {
             </div>
             <div className="flex justify-center">
               <Image
-                src="https://picsum.photos/600/400?random=11"
-                alt="Mangrove Forest"
+                src="https://picsum.photos/600/400?random=12"
+                alt="Seagrass Bed"
                 width={600}
                 height={400}
                 className="overflow-hidden rounded-xl object-cover"
-                data-ai-hint="mangrove forest"
+                data-ai-hint="seagrass bed"
               />
             </div>
           </div>
