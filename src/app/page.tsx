@@ -22,9 +22,6 @@ export default function Home() {
             <Link href="#about" className="transition-colors hover:text-primary">
               About
             </Link>
-            <Link href="/awareness" className="transition-colors hover:text-primary">
-              Awareness
-            </Link>
           </nav>
           <Button asChild>
             <Link href="/login">Login</Link>
