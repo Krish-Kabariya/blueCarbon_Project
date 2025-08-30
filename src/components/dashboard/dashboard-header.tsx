@@ -4,11 +4,11 @@
 import { usePathname, useRouter } from 'next/navigation';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent, DropdownMenuPortal } from '@/components/ui/dropdown-menu';
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Search, Settings, LogOut, Loader2, File, AlertCircle, Menu } from "lucide-react";
+import { Search, Settings, LogOut, Loader2, File, AlertCircle, Menu, Moon, Sun } from "lucide-react";
 import { searchAction } from '@/app/actions';
 import { FormEvent, useState, useRef, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
@@ -17,6 +17,7 @@ import { Popover, PopoverContent, PopoverTrigger, PopoverAnchor } from '@/compon
 import Link from 'next/link';
 import { auth } from '@/lib/firebase';
 import { signOut } from 'firebase/auth';
+import { useTheme } from 'next-themes';
 
 
 export function DashboardHeader() {
@@ -27,6 +28,7 @@ export function DashboardHeader() {
   const [searchResults, setSearchResults] = useState<SearchOutput | null>(null);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const { setTheme } = useTheme();
 
 
   const getPageTitle = () => {
@@ -235,6 +237,26 @@ export function DashboardHeader() {
                         <LogOut className="mr-2 h-4 w-4" />
                         <span>Sign out</span>
                     </DropdownMenuItem>
+                    <DropdownMenuSub>
+                        <DropdownMenuSubTrigger>
+                            <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 mr-2" />
+                            <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 mr-2" />
+                            <span>Theme</span>
+                        </DropdownMenuSubTrigger>
+                         <DropdownMenuPortal>
+                            <DropdownMenuSubContent>
+                                <DropdownMenuItem onClick={() => setTheme("light")}>
+                                    Light
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setTheme("dark")}>
+                                    Dark
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setTheme("system")}>
+                                    System
+                                </DropdownMenuItem>
+                            </DropdownMenuSubContent>
+                        </DropdownMenuPortal>
+                    </DropdownMenuSub>
                 </DropdownMenuContent>
             </DropdownMenu>
         </div>
