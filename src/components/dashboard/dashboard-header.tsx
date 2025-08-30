@@ -1,19 +1,23 @@
 
 "use client";
 
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Search, Settings, LogOut } from "lucide-react";
+import { Search, Settings, LogOut, Loader2 } from "lucide-react";
 import { searchAction } from '@/app/actions';
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
+import { useToast } from '@/hooks/use-toast';
 
 export function DashboardHeader() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { toast } = useToast();
+  const [isSearching, setIsSearching] = useState(false);
 
   const getPageTitle = () => {
     switch (pathname) {
@@ -37,12 +41,49 @@ export function DashboardHeader() {
 
   const handleSearch = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsSearching(true);
     const formData = new FormData(event.currentTarget);
-    const response = await searchAction(formData);
-    if (response.error) {
-      console.error(response.error);
-    } else {
-      console.log(response.results);
+    const query = formData.get('query') as string;
+
+    if (!query.trim()) {
+        setIsSearching(false);
+        return;
+    }
+    
+    try {
+        const response = await searchAction(formData);
+
+        if (response.error) {
+            toast({
+                variant: 'destructive',
+                title: 'Search Failed',
+                description: response.error,
+            });
+        } else if (response.results?.results && response.results.results.length > 0) {
+            // For simplicity, navigate to the first result
+            const firstResult = response.results.results[0];
+            if(firstResult.url) {
+                router.push(firstResult.url);
+            } else {
+                 toast({
+                    title: 'No Results Found',
+                    description: 'Your search did not return any results.',
+                });
+            }
+        } else {
+             toast({
+                title: 'No Results Found',
+                description: 'Your search did not return any results.',
+            });
+        }
+    } catch (error) {
+         toast({
+            variant: 'destructive',
+            title: 'An Error Occurred',
+            description: 'Something went wrong during the search.',
+        });
+    } finally {
+        setIsSearching(false);
     }
   };
 
@@ -54,8 +95,12 @@ export function DashboardHeader() {
         </div>
         <div className="flex flex-1 items-center justify-end gap-4">
             <form onSubmit={handleSearch} className="relative hidden sm:block">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input name="query" placeholder="Search" className="w-full sm:w-48 md:w-72 pl-10" />
+                {isSearching ? (
+                    <Loader2 className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground animate-spin" />
+                ) : (
+                    <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                )}
+                <Input name="query" placeholder="Search..." className="w-full sm:w-48 md:w-72 pl-10" disabled={isSearching} />
             </form>
              <Select defaultValue="high">
                 <SelectTrigger className="w-28 hidden md:flex">
