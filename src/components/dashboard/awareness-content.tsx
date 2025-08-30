@@ -13,87 +13,82 @@ import {
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Home, MoreVertical, BarChart4, ShieldCheck, Users, Hammer, Siren, PawPrint, Camera } from 'lucide-react';
+import { ChevronRight, MoreVertical, ShieldAlert, Waves, Biohazard, Mountain } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 const newsItems = [
   {
     title: "How Blue Carbon Ecosystems Are Our Best Bet Against Climate Change",
     source: "Coastal Conservation Foundation",
     date: "Aug 23, 2024",
-    image: "https://picsum.photos/400/225?random=9",
+    image: "https://picsum.photos/400/225?random=1",
     dataAiHint: "mangrove forest",
   },
   {
-    title: "Storm Surges Threaten Vital Carbon-Storing Salt Marshes",
-    source: "Climate Action Today",
+    title: "Community Action Leads to Major Coastal Cleanup Initiative",
+    source: "Local Community Channel",
     date: "Aug 22, 2024",
-    image: "https://picsum.photos/400/225?random=10",
-    dataAiHint: "stormy coast",
+    image: "https://picsum.photos/400/225?random=2",
+    dataAiHint: "community meeting",
+  },
+  {
+    title: "Scientists Discover New Carbon-Absorbing Seagrass Meadow",
+    source: "Marine Biology Institute",
+    date: "Aug 21, 2024",
+    image: "https://picsum.photos/400/225?random=3",
+    dataAiHint: "coastal research",
   },
   {
     title: "The Hidden Cost of Coastal Pollution on Carbon Sequestration",
     source: "Environmental Science Weekly",
-    date: "Aug 21, 2024",
-    image: "https://picsum.photos/400/225?random=11",
+    date: "Aug 20, 2024",
+    image: "https://picsum.photos/400/225?random=4",
     dataAiHint: "coastal pollution",
   },
   {
     title: "Illegal Sand Mining Erodes Coastlines and Carbon Sinks",
     source: "Global Environmental Report",
-    date: "Aug 20, 2024",
-    image: "https://picsum.photos/400/225?random=12",
+    date: "Aug 19, 2024",
+    image: "https://picsum.photos/400/225?random=5",
     dataAiHint: "sand mining",
   },
-  {
-    title: "Community-Led Initiatives to Protect Blue Carbon Habitats",
-    source: "Local Community Channel",
-    date: "Aug 19, 2024",
+    {
+    title: "Storm Surges Threaten Vital Carbon-Storing Salt Marshes",
+    source: "Climate Action Today",
+    date: "Aug 18, 2024",
     image: "https://picsum.photos/400/225?random=6",
-    dataAiHint: "coastal research",
+    dataAiHint: "stormy coast",
   },
 ];
 
 const safetyTips = [
     {
-        title: "Know Your Evacuation Zone",
-        icon: BarChart4,
+        title: "Storm Surge",
+        icon: Waves,
+        tips: [
+            "Evacuate Immediately: If authorities issue a warning for your area, leave.",
+            "Seek High Ground: Move inland and to the highest point possible.",
+            "Never Drive Through Floods: Your vehicle can be swept away in seconds.",
+        ]
     },
     {
-        title: "Prepare a Disaster Kit",
-        icon: Home,
+        title: "Coastal Erosion",
+        icon: Mountain,
+        tips: [
+            "Keep a Safe Distance: Stay at least 10 feet away from cliff edges.",
+            "Watch for Warning Signs: Look for cracks in the ground or leaning trees.",
+            "Report Major Changes: Inform authorities if you see a recent landslide.",
+        ]
     },
     {
-        title: "Have an Evacuation Plan",
-        icon: BarChart4,
-    },
-     {
-        title: "Stay Informed",
-        icon: Home,
-    },
-    {
-        title: "Check Insurance Coverage",
-        icon: ShieldCheck,
-    },
-    {
-        title: "Strengthen Your Home",
-        icon: Hammer,
-    },
-    {
-        title: "Help Your Neighbors",
-        icon: Users,
-    },
-    {
-        title: "Understand Warning Sirens",
-        icon: Siren,
-    },
-    {
-        title: "Protect Your Pets",
-        icon: PawPrint,
-    },
-    {
-        title: "Document Your Belongings",
-        icon: Camera,
+        title: "Pollution",
+        icon: Biohazard,
+        tips: [
+            "Do Not Touch: Never handle or touch potential pollutants like oil or chemicals.",
+            "Leave the Area: If you smell strange fumes, move away immediately.",
+            "Report It: Your most important job is to report the pollution to the authorities.",
+        ]
     },
 ];
 
@@ -190,26 +185,26 @@ export function AwarenessContent() {
       
       {/* Safety Tips */}
       <section>
-          <h2 className="text-xl font-semibold text-foreground mb-4">Safety Tips</h2>
-           <Carousel opts={{ align: "start", loop: true }} className="w-full">
-              <CarouselContent>
-                {safetyTips.map((tip, index) => (
-                  <CarouselItem key={index} className="basis-full sm:basis-1/2 lg:basis-1/3">
-                    <Card>
-                      <CardContent className="flex items-center justify-between p-4">
-                        <div className="flex items-center gap-3">
-                           <div className="bg-muted p-2 rounded-full">
-                             <tip.icon className="h-6 w-6 text-foreground" />
-                           </div>
-                           <span className="font-semibold text-foreground">{tip.title}</span>
-                        </div>
-                        <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                      </CardContent>
-                    </Card>
-                  </CarouselItem>
-                ))}
-            </CarouselContent>
-        </Carousel>
+        <h2 className="text-xl font-semibold text-foreground mb-4">Safety Tips</h2>
+        <Accordion type="single" collapsible className="w-full">
+          {safetyTips.map((category, index) => (
+            <AccordionItem key={index} value={`item-${index}`}>
+              <AccordionTrigger>
+                <div className="flex items-center gap-3">
+                  <category.icon className="h-5 w-5 text-primary" />
+                  <span className="font-semibold">{category.title}</span>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent>
+                <ul className="list-disc space-y-2 pl-6 text-muted-foreground">
+                  {category.tips.map((tip, tipIndex) => (
+                    <li key={tipIndex}>{tip}</li>
+                  ))}
+                </ul>
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
       </section>
       
       {/* Community Spotlight */}
