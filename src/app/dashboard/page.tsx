@@ -41,7 +41,7 @@ export default async function DashboardPage() {
         <TabsContent value="map">
           <Card className="mt-4">
             <CardContent className="p-0">
-               <div className="relative rounded-lg overflow-hidden aspect-video">
+               <div className="relative rounded-lg overflow-hidden h-[75vh]">
                   <DynamicMap />
               </div>
             </CardContent>
