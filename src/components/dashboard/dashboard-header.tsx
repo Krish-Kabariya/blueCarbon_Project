@@ -8,7 +8,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Search, Settings, LogOut, Loader2, File, AlertCircle } from "lucide-react";
+import { Search, Settings, LogOut, Loader2, File, AlertCircle, Menu } from "lucide-react";
 import { searchAction } from '@/app/actions';
 import { FormEvent, useState, useRef, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
@@ -140,14 +140,17 @@ export function DashboardHeader() {
 
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-background px-4 lg:h-[60px] lg:px-6 sticky top-0 z-30">
-        <SidebarTrigger className="md:hidden" />
-        <div className="flex-1">
-            <h1 className="text-lg font-semibold">{getPageTitle()}</h1>
+        <div className="flex items-center gap-4">
+            <SidebarTrigger className="md:hidden">
+              <Menu />
+            </SidebarTrigger>
+            <h1 className="text-lg font-semibold hidden md:block">{getPageTitle()}</h1>
         </div>
+
         <div className="flex flex-1 items-center justify-end gap-4">
             <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
               <PopoverAnchor asChild>
-                <form onSubmit={handleSearch} className="relative hidden sm:block" ref={searchInputRef}>
+                <form onSubmit={handleSearch} className="relative" ref={searchInputRef}>
                     <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                     <Input 
                       name="query" 
