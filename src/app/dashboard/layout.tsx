@@ -15,6 +15,7 @@ import {
   SidebarMenuItem,
   SidebarProvider,
   SidebarTrigger,
+  SidebarInset
 } from "@/components/ui/sidebar";
 import { Home, Bell, Map, BookOpen, BarChart, Menu } from "lucide-react";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
@@ -127,12 +128,12 @@ export default function DashboardLayout({
         </Sidebar>
 
         {/* Main content */}
-        <main className="flex-1 flex flex-col">
+        <SidebarInset>
             <DashboardHeader />
             <div className="flex-1 overflow-y-auto">
                 {children}
             </div>
-        </main>
+        </SidebarInset>
       </div>
     </SidebarProvider>
   );
