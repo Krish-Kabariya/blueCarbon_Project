@@ -9,6 +9,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  type CarouselApi,
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -97,6 +98,28 @@ const communityEvents = [
 ];
 
 export function AwarenessContent() {
+  const [api, setApi] = React.useState<CarouselApi>()
+  const [current, setCurrent] = React.useState(0)
+
+  React.useEffect(() => {
+    if (!api) {
+      return
+    }
+ 
+    setCurrent(api.selectedScrollSnap())
+ 
+    const handleSelect = (api: CarouselApi) => {
+      setCurrent(api.selectedScrollSnap())
+    }
+
+    api.on("select", handleSelect)
+ 
+    return () => {
+      api.off("select", handleSelect)
+    }
+  }, [api])
+
+
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       {/* Header */}
@@ -115,10 +138,10 @@ export function AwarenessContent() {
             Topics <ChevronRight className="h-4 w-4 ml-1" />
           </Button>
         </div>
-        <Carousel opts={{ align: "start", loop: true }} className="w-full">
+        <Carousel setApi={setApi} opts={{ align: "start", loop: true }} className="w-full">
           <CarouselContent>
             {newsItems.map((item, index) => (
-              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+              <CarouselItem key={index} className="md:basis-1/2 lg:basis-2/3">
                 <Card className="overflow-hidden">
                   <CardContent className="p-0">
                     <Image
@@ -129,11 +152,6 @@ export function AwarenessContent() {
                       className="aspect-[16/9] w-full object-cover"
                       data-ai-hint={item.dataAiHint}
                     />
-                    <div className="p-4">
-                      <h3 className="font-semibold text-foreground truncate">{item.title}</h3>
-                      <p className="text-sm text-muted-foreground">{item.source}</p>
-                      <p className="text-xs text-muted-foreground/80 mt-1">{item.date}</p>
-                    </div>
                   </CardContent>
                 </Card>
               </CarouselItem>
@@ -142,6 +160,13 @@ export function AwarenessContent() {
           <CarouselPrevious className="hidden sm:flex" />
           <CarouselNext className="hidden sm:flex" />
         </Carousel>
+        {newsItems[current] && (
+            <div className="mt-4 p-4 bg-muted rounded-lg">
+                <h3 className="font-semibold text-foreground truncate">{newsItems[current].title}</h3>
+                <p className="text-sm text-muted-foreground">{newsItems[current].source}</p>
+                <p className="text-xs text-muted-foreground/80 mt-1">{newsİtems[current].date}</p>
+            </div>
+        )}
       </section>
       
       {/* Safety Tips */}
