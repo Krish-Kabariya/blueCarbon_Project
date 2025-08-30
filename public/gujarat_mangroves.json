@@ -1,34 +1,66 @@
+
 {
   "type": "FeatureCollection",
-  "name": "gujarat_mangroves",
-  "crs": {
-    "type": "name",
-    "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" }
-  },
   "features": [
     {
       "type": "Feature",
       "properties": {
-        "Name": "Gulf of Kutch Mangroves",
-        "Description": "Dense mangroves in the intertidal zones of the Gulf of Kutch, critical for marine biodiversity."
+        "Name": "Kutch",
+        "Description": "Area: ~799 km² | Density: Dense",
+        "density": "dense"
       },
-      "geometry": { "type": "Point", "coordinates": [69.5, 22.7] }
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          69.5,
+          23.5
+        ]
+      }
     },
     {
       "type": "Feature",
       "properties": {
-        "Name": "Purna River Estuary",
-        "Description": "Mangrove ecosystem along the Purna River estuary, vital for coastal protection."
+        "Name": "Gulf of Kutch (Jamnagar etc.)",
+        "Description": "Area: ~236 km² | Density: Medium",
+        "density": "medium"
       },
-      "geometry": { "type": "Point", "coordinates": [72.8, 20.9] }
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          70.1,
+          22.5
+        ]
+      }
     },
     {
       "type": "Feature",
       "properties": {
-        "Name": "Gulf of Khambhat",
-        "Description": "Extensive mangrove forests along the coastal wetlands of the Gulf of Khambhat."
+        "Name": "Central & South Gujarat (Gulf of Khambhat)",
+        "Description": "Area: ~134 km² | Density: Sparse",
+        "density": "sparse"
       },
-      "geometry": { "type": "Point", "coordinates": [72.5, 22.3] }
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.5,
+          21.7
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Saurashtra Coast",
+        "Description": "Area: ~6 km² | Density: Sparse",
+        "density": "sparse"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          70.8,
+          21.0
+        ]
+      }
     }
   ]
 }
