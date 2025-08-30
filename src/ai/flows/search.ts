@@ -17,12 +17,12 @@ const SearchResultSchema = z.object({
   description: z.string().describe('A brief description of the search result.'),
 });
 
-export const SearchInputSchema = z.object({
+const SearchInputSchema = z.object({
   query: z.string().describe('The search query.'),
 });
 export type SearchInput = z.infer<typeof SearchInputSchema>;
 
-export const SearchOutputSchema = z.object({
+const SearchOutputSchema = z.object({
   results: z.array(SearchResultSchema).describe('A list of search results.'),
 });
 export type SearchOutput = z.infer<typeof SearchOutputSchema>;
