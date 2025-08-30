@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Home, MoreVertical, BarChart4 } from 'lucide-react';
+import { ChevronRight, Home, MoreVertical, BarChart4, ShieldCheck, Users, Hammer } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const newsItems = [
@@ -62,6 +62,18 @@ const safetyTips = [
      {
         title: "Stay Informed",
         icon: Home,
+    },
+    {
+        title: "Check Insurance Coverage",
+        icon: ShieldCheck,
+    },
+    {
+        title: "Strengthen Your Home",
+        icon: Hammer,
+    },
+    {
+        title: "Help Your Neighbors",
+        icon: Users,
     },
 ];
 
