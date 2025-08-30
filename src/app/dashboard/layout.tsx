@@ -1,19 +1,20 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+"use client";
+
+import Link from "next/link";
 import {
-  SidebarProvider,
   Sidebar,
-  SidebarHeader,
   SidebarContent,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
   SidebarFooter,
-  SidebarInset,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { Home, Bell, BookOpen, Megaphone, LifeBuoy, BarChart, LogOut, Menu } from "lucide-react";
-import Link from 'next/link';
+import { Menu, Home, Bell, Map, Award, BookOpen } from "lucide-react";
 
 export default function DashboardLayout({
   children,
@@ -22,94 +23,81 @@ export default function DashboardLayout({
 }) {
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900">
+      <div className="flex h-screen">
+        {/* Sidebar */}
         <Sidebar>
-          <SidebarHeader>
-            <div className="flex items-center gap-3 p-2">
-              <h1 className="text-xl font-semibold text-sidebar-foreground">CoastalWatch</h1>
-            </div>
-          </SidebarHeader>
           <SidebarContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="Dashboard" isActive>
-                  <Link href="/dashboard">
-                    <Home />
-                    <span>Dashboard</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="Alerts">
-                  <Link href="#">
-                    <Bell />
-                    <span>Threat Alerts</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="Education">
-                  <Link href="#">
-                    <BookOpen />
-                    <span>Education</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="Reporting">
-                   <Link href="#">
-                    <Megaphone />
-                    <span>Community Reporting</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="Tips">
-                   <Link href="#">
-                    <LifeBuoy />
-                    <span>Resilience Tips</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="Data">
-                   <Link href="/dashboard/data-visualization">
-                    <BarChart />
-                    <span>Data Visualization</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
+            <SidebarGroup>
+              <SidebarGroupLabel>
+                <SidebarTrigger>
+                  <Menu />
+                </SidebarTrigger>
+              </SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild tooltip="Dashboard" isActive>
+                      <Link href="/dashboard">
+                        <div className="flex items-center gap-2">
+                          <Home />
+                          <span>Dashboard</span>
+                        </div>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild tooltip="Alerts">
+                      <Link href="#">
+                        <div className="flex items-center gap-2">
+                          <Bell />
+                          <span>Threat Alerts</span>
+                        </div>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild tooltip="Map">
+                      <Link href="/map">
+                        <div className="flex items-center gap-2">
+                          <Map />
+                          <span>Map</span>
+                        </div>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild tooltip="Leaderboard">
+                      <Link href="/leaderboard">
+                        <div className="flex items-center gap-2">
+                          <Award />
+                          <span>Leaderboard</span>
+                        </div>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild tooltip="Awareness">
+                      <Link href="/awareness">
+                        <div className="flex items-center gap-2">
+                          <BookOpen />
+                          <span>Awareness</span>
+                        </div>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
           </SidebarContent>
-          <SidebarFooter>
-            <div className="flex items-center gap-3 p-2">
-              <Avatar className="h-9 w-9">
-                <AvatarImage src="https://picsum.photos/100/100" data-ai-hint="profile picture" />
-                <AvatarFallback>CW</AvatarFallback>
-              </Avatar>
-              <div className="flex flex-col overflow-hidden">
-                <span className="truncate font-semibold">Community Member</span>
-                <span className="truncate text-xs text-muted-foreground">member@coastal.org</span>
-              </div>
-              <Link href="/login" className="ml-auto">
-                <Button variant="ghost" size="icon" aria-label="Log Out">
-                  <LogOut />
-                </Button>
-              </Link>
-            </div>
-          </SidebarFooter>
+          <SidebarFooter />
         </Sidebar>
-        <SidebarInset>
-           <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b bg-card/80 px-4 backdrop-blur-sm md:px-6">
-            <h1 className="text-2xl font-bold text-foreground">CoastalWatch</h1>
-            <SidebarTrigger>
-                <Menu />
-            </SidebarTrigger>
-          </header>
-          <main className="flex-1 overflow-auto p-4 md:p-6">
-            {children}
-          </main>
-        </SidebarInset>
+
+        {/* Main content */}
+        <main className="flex-1 p-4">{children}</main>
       </div>
     </SidebarProvider>
   );
