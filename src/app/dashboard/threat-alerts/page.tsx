@@ -13,7 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import {
   AlertTriangle,
   ChevronDown,
-  Cyclone,
+  Tornado,
   LocateIcon,
   Plus,
   Search,
@@ -168,7 +168,7 @@ export default function ThreatAlertsPage() {
                         <Card className="overflow-hidden bg-card/50">
                              <CardHeader className="flex flex-row items-start gap-4 space-y-0 bg-red-700/10 p-4">
                                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-red-700 text-white">
-                                    <Cyclone size={32} />
+                                    <Tornado size={32} />
                                 </div>
                                 <div className="flex-1">
                                     <CardTitle className="text-lg">Hurricane Delta Warning</CardTitle>
@@ -237,5 +237,7 @@ export default function ThreatAlertsPage() {
     </div>
   );
 }
+
+    
 
     
