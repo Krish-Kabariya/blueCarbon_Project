@@ -52,6 +52,7 @@ export default function DashboardPage() {
       date: "2024-07-28",
       type: "Summary",
       status: "Complete",
+      href: "/dashboard/reports/REP-001"
     },
     {
       id: "REP-002",
@@ -59,6 +60,7 @@ export default function DashboardPage() {
       date: "2024-07-25",
       type: "Impact Analysis",
       status: "Complete",
+      href: "/dashboard/reports/impact-analysis"
     },
     {
       id: "REP-003",
@@ -66,6 +68,7 @@ export default function DashboardPage() {
       date: "2024-07-20",
       type: "Water Quality",
       status: "Complete",
+      href: "/dashboard/reports/REP-003"
     },
     {
         id: "REP-004",
@@ -73,6 +76,7 @@ export default function DashboardPage() {
         date: "2024-07-31",
         type: "Log Export",
         status: "Generating",
+        href: "#"
     }
   ];
 
@@ -180,8 +184,8 @@ export default function DashboardPage() {
                                     </Badge>
                                 </TableCell>
                                 <TableCell className="text-right space-x-2">
-                                    <Button variant="outline" size="icon" aria-label="View Report" asChild>
-                                      <Link href={`/dashboard/reports/${report.id}`}>
+                                    <Button variant="outline" size="icon" aria-label="View Report" asChild disabled={report.status !== 'Complete'}>
+                                      <Link href={report.href}>
                                         <Eye className="h-4 w-4" />
                                       </Link>
                                     </Button>

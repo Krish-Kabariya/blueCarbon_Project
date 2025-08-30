@@ -1,4 +1,5 @@
 
+
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -81,7 +82,7 @@ export default function ReportDetailPage({ params }: { params: { id: string } })
           </Button>
           <div>
             <h1 className="text-2xl font-bold">Weekly Threat Summary</h1>
-            <p className="text-muted-foreground">October 23 - October 29, 2023</p>
+            <p className="text-muted-foreground">Report ID: {params.id}</p>
           </div>
         </div>
 
