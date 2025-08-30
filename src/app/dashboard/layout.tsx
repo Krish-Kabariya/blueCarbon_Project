@@ -19,7 +19,6 @@ import {
 import { Home, Bell, Map, BookOpen, BarChart, Menu } from "lucide-react";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function DashboardLayout({
   children,
@@ -115,9 +114,6 @@ export default function DashboardLayout({
                         </div>
                       </Link>
                     </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                    <ThemeToggle />
                   </SidebarMenuItem>
                 </SidebarMenu>
               </SidebarGroupContent>

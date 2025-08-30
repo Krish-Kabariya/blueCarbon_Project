@@ -17,7 +17,6 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Menu, Home, Bell, Map, Award, BookOpen, BarChart } from "lucide-react";
-import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function AwarenessLayout({
   children,
@@ -93,9 +92,6 @@ export default function AwarenessLayout({
                         </div>
                       </Link>
                     </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                    <ThemeToggle />
                   </SidebarMenuItem>
                 </SidebarMenu>
               </SidebarGroupContent>
