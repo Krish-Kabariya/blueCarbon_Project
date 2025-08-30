@@ -14,7 +14,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { Menu, Home, Bell, Map, Award, BookOpen } from "lucide-react";
+import { Menu, Home, Bell, Map, Award, BookOpen, BarChart } from "lucide-react";
 
 export default function DashboardLayout({
   children,
@@ -46,6 +46,17 @@ export default function DashboardLayout({
                     </SidebarMenuButton>
                   </SidebarMenuItem>
 
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild tooltip="Data Visualization">
+                      <Link href="/dashboard/data-visualization">
+                        <div className="flex items-center gap-2">
+                          <BarChart />
+                          <span>Data Visualization</span>
+                        </div>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild tooltip="Alerts">
                       <Link href="#">
