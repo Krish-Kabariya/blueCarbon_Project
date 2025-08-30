@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Separator } from '@/components/ui/separator';
+import { Label } from "@/components/ui/label";
 import { useToast } from '@/hooks/use-toast';
 
 const profileFormSchema = z.object({
@@ -185,4 +185,3 @@ export default function ProfilePage() {
     </div>
   );
 }
-
