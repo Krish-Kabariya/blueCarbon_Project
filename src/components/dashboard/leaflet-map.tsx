@@ -7,6 +7,7 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
 import "leaflet-defaulticon-compatibility";
 import type { FeatureCollection } from 'geojson';
+import L from 'leaflet';
 
 // Define the type for our GeoJSON features properties
 interface MangroveProperties {
@@ -47,7 +48,7 @@ const LeafletMap = () => {
     }
   };
 
-  const pointToLayer = (feature: any, latlng: [number, number]) => {
+  const pointToLayer = (feature: any, latlng: L.LatLngExpression) => {
     return L.circleMarker(latlng, {
       radius: 8,
       fillColor: "#48bb78", // A nice green color
