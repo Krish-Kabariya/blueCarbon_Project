@@ -231,9 +231,11 @@ export default function ThreatAlertsPage() {
                                 </div>
                             </DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>
-                                <User className="mr-2 h-4 w-4" />
-                                <span>My Profile</span>
+                            <DropdownMenuItem asChild>
+                                <Link href="/dashboard/profile">
+                                    <User className="mr-2 h-4 w-4" />
+                                    <span>My Profile</span>
+                                </Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem>
                                 <Settings className="mr-2 h-4 w-4" />
