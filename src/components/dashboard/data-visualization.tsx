@@ -71,17 +71,8 @@ export function DataVisualization() {
                     </CardContent>
                 </Card>
                  <Card>
-                    <CardHeader className="flex flex-row items-center justify-between">
+                    <CardHeader>
                         <CardTitle>District</CardTitle>
-                        <Select defaultValue="kutch">
-                            <SelectTrigger className="w-32">
-                                <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="kutch">Custom</SelectItem>
-                                <SelectItem value="all">All Districts</SelectItem>
-                            </SelectContent>
-                        </Select>
                     </CardHeader>
                     <CardContent className="space-y-3">
                         {districts.map(district => (
