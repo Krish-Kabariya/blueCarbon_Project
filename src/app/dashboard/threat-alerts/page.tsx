@@ -3,30 +3,18 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
 import {
   AlertTriangle,
-  ChevronDown,
   Tornado,
-  LocateIcon,
-  Plus,
-  Search,
-  Thermometer,
   Waves,
   Wind,
   Info,
   ShieldAlert,
-  User,
-  Settings,
-  LogOut,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -155,9 +143,9 @@ export default function ThreatAlertsPage() {
     const severityStyles = getSeverityStyles(selectedAlert.severity);
 
   return (
-    <div className="flex h-[calc(100vh-2rem)] w-full gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-full">
         {/* Left Sidebar */}
-        <aside className="hidden md:flex w-full max-w-xs flex-col gap-4">
+        <aside className="hidden lg:flex col-span-1 flex-col gap-4">
             <div className="flex items-center justify-between p-2">
                 <div className="flex items-center gap-3">
                     <Avatar>
@@ -194,57 +182,7 @@ export default function ThreatAlertsPage() {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 flex flex-col gap-4 pr-4">
-            <header className="flex items-center justify-between py-2">
-                <h1 className="text-xl font-bold">{selectedAlert.name}</h1>
-                <div className="flex items-center gap-4">
-                    <div className="relative">
-                        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                        <Input placeholder="Search" className="w-48 pl-10" />
-                    </div>
-                     <Select defaultValue="high">
-                        <SelectTrigger className="w-28">
-                            <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="critical">Critical</SelectItem>
-                            <SelectItem value="high">High</SelectItem>
-                            <SelectItem value="warning">Warning</SelectItem>
-                             <SelectItem value="watch">Watch</SelectItem>
-                            <SelectItem value="advisory">Advisory</SelectItem>
-                        </SelectContent>
-                    </Select>
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-                                <Avatar>
-                                    <AvatarImage src="https://picsum.photos/100/100" alt="User" />
-                                    <AvatarFallback>U</AvatarFallback>
-                                </Avatar>
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-56" align="end" forceMount>
-                            <DropdownMenuLabel className="font-normal">
-                                <div className="flex flex-col space-y-1">
-                                    <p className="text-sm font-medium leading-none">User</p>
-                                    <p className="text-xs leading-none text-muted-foreground">user@example.com</p>
-                                </div>
-                            </DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>
-                                <Settings className="mr-2 h-4 w-4" />
-                                <span>Notification Settings</span>
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>
-                                <LogOut className="mr-2 h-4 w-4" />
-                                <span>Logout</span>
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                </div>
-            </header>
-
+        <main className="col-span-1 lg:col-span-3 flex flex-col gap-4">
             <Card className="w-full flex-1">
                 <CardContent className="grid grid-cols-1 gap-6 p-4 lg:grid-cols-5 h-full">
                     <div className="lg:col-span-3">
@@ -324,5 +262,3 @@ export default function ThreatAlertsPage() {
     </div>
   );
 }
-
-    

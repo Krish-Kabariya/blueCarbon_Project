@@ -88,12 +88,6 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6">
-       <div className="flex items-center gap-4">
-        <SidebarTrigger className="md:hidden">
-          <Menu />
-        </SidebarTrigger>
-        <h1 className="text-2xl font-bold">Dashboard</h1>
-      </div>
       <Tabs defaultValue="map" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="map"><Map className="mr-2" /> Map View</TabsTrigger>

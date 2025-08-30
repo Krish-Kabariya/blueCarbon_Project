@@ -14,9 +14,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
-  SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { Menu, Home, Bell, Map, Award, BookOpen, BarChart } from "lucide-react";
+import { Home, Bell, Map, BookOpen, BarChart } from "lucide-react";
+import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 
 export default function DashboardLayout({
   children,
@@ -27,15 +27,13 @@ export default function DashboardLayout({
 
   return (
     <SidebarProvider>
-      <div className="flex h-screen">
+      <div className="flex h-screen bg-background">
         {/* Sidebar */}
         <Sidebar>
           <SidebarContent>
             <SidebarGroup>
               <SidebarGroupLabel>
-                <SidebarTrigger>
-                  <Menu />
-                </SidebarTrigger>
+                CoastalWatch
               </SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
@@ -101,7 +99,12 @@ export default function DashboardLayout({
         </Sidebar>
 
         {/* Main content */}
-        <main className="flex-1 p-4">{children}</main>
+        <main className="flex-1 flex flex-col">
+            <DashboardHeader />
+            <div className="flex-1 overflow-y-auto p-4 md:p-6">
+                {children}
+            </div>
+        </main>
       </div>
     </SidebarProvider>
   );
