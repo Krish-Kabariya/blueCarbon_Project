@@ -2,12 +2,11 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, GeoJSON, Popup, CircleMarker } from 'react-leaflet';
+import { MapContainer, TileLayer, CircleMarker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import type { FeatureCollection, Feature, Point } from 'geojson';
 import L from 'leaflet';
 
-// Fix for default markers as recommended.
+// This is to fix the default icon issue with Leaflet in React
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
@@ -15,15 +14,21 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
+
 interface MangroveProperties {
   state: string;
   city: string;
   mangrove_cover_sq_km: number;
   density: 'high' | 'medium' | 'low';
+  moderately_dense_km2?: number;
+  open_km2?: number;
+  pct_moderate?: number;
+  latitude: number;
+  longitude: number;
 }
 
 const LeafletMap = () => {
-  const [geoJsonData, setGeoJsonData] = useState<FeatureCollection<Point, MangroveProperties> | null>(null);
+  const [mangroveData, setMangroveData] = useState<MangroveProperties[]>([]);
   const position: [number, number] = [20.5937, 78.9629]; // Centered on India
   const maptilerApiKey = process.env.NEXT_PUBLIC_MAPTILER_API_KEY;
 
@@ -35,70 +40,30 @@ const LeafletMap = () => {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        
-        // Convert the raw JSON to GeoJSON FeatureCollection
-        const features: Feature<Point, MangroveProperties>[] = data.india_mangroves.map((item: any) => ({
-          type: 'Feature',
-          properties: {
-            state: item.state,
-            city: item.city,
-            mangrove_cover_sq_km: item.mangrove_cover_sq_km,
-            density: item.density,
-          },
-          geometry: {
-            type: 'Point',
-            coordinates: [item.longitude, item.latitude],
-          },
-        }));
-
-        setGeoJsonData({
-          type: 'FeatureCollection',
-          features: features,
-        });
+        setMangroveData(data.india_mangroves || []);
 
       } catch (error) {
-        console.error("Failed to fetch GeoJSON data:", error);
+        console.error("Failed to fetch mangrove data:", error);
       }
     };
 
     fetchData();
   }, []);
 
-  const getStyle = (feature: Feature<Point, MangroveProperties>) => {
-    const density = feature?.properties?.density;
+  const getStyle = (density: string) => {
     switch (density) {
       case 'high':
-        return { fillColor: "#4CAF50", color: "#333", weight: 1, fillOpacity: 0.8 }; // Green for high
+        return { fillColor: "#4CAF50", color: "#333", weight: 1, fillOpacity: 0.8 }; // Green
       case 'medium':
-        return { fillColor: "#FDD835", color: "#333", weight: 1, fillOpacity: 0.8 }; // Yellow for medium
+        return { fillColor: "#FDD835", color: "#333", weight: 1, fillOpacity: 0.8 }; // Yellow
       case 'low':
-        return { fillColor: "#EF6C00", color: "#fbe9e7", weight: 1, fillOpacity: 0.8 }; // Orange/Red for low
+        return { fillColor: "#EF6C00", color: "#fbe9e7", weight: 1, fillOpacity: 0.8 }; // Orange/Red
       default:
-        return { fillColor: "#9E9E9E", color: "#fff", weight: 1, fillOpacity: 0.7 }; // Grey for default
+        return { fillColor: "#9E9E9E", color: "#fff", weight: 1, fillOpacity: 0.7 }; // Grey
     }
   };
-
-  const onEachFeature = (feature: Feature<Point, MangroveProperties>, layer: L.Layer) => {
-    if (feature.properties) {
-      const popupContent = `
-        <div style="background-color: #2d3748; color: #e2e8f0; padding: 10px; border-radius: 8px; font-family: sans-serif;">
-          <h3 style="margin: 0 0 8px 0; font-size: 16px; border-bottom: 1px solid #4a5568; padding-bottom: 5px;">${feature.properties.city}, ${feature.properties.state}</h3>
-          <p style="margin: 0 0 4px 0; font-size: 14px;"><strong>Mangrove Cover:</strong> ${feature.properties.mangrove_cover_sq_km} km²</p>
-          <p style="margin: 0; font-size: 14px;"><strong>Density:</strong> <span style="text-transform: capitalize;">${feature.properties.density}</span></p>
-        </div>
-      `;
-      layer.bindPopup(popupContent);
-    }
-  };
-
-  const pointToLayer = (feature: Feature<Point, MangroveProperties>, latlng: L.LatLngExpression) => {
-    return L.circleMarker(latlng, {
-      ...getStyle(feature),
-      radius: 8,
-    });
-  };
-
-  const tileUrl = maptilerApiKey 
+  
+  const tileUrl = maptilerApiKey
     ? `https://api.maptiler.com/maps/dataviz/{z}/{x}/{y}.png?key=${maptilerApiKey}`
     : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 
@@ -117,13 +82,27 @@ const LeafletMap = () => {
           url={tileUrl}
           attribution={attribution}
         />
-        {geoJsonData && (
-          <GeoJSON 
-            data={geoJsonData} 
-            onEachFeature={onEachFeature}
-            pointToLayer={pointToLayer}
-          />
-        )}
+        {mangroveData.map((item, index) => (
+          <CircleMarker
+            key={index}
+            center={[item.latitude, item.longitude]}
+            pathOptions={getStyle(item.density)}
+            radius={8}
+          >
+            <Popup>
+              <div style="background-color: #2d3748; color: #e2e8f0; padding: 10px; border-radius: 8px; font-family: sans-serif; width: 200px;">
+                <h3 style="margin: 0 0 8px 0; font-size: 16px; border-bottom: 1px solid #4a5568; padding-bottom: 5px;">
+                  {item.city}, {item.state}
+                </h3>
+                <p style="margin: 0 0 4px 0; font-size: 14px;"><strong>Total Cover:</strong> {item.mangrove_cover_sq_km} km²</p>
+                {item.pct_moderate !== undefined && (
+                  <p style="margin: 0 0 4px 0; font-size: 14px;"><strong>Moderately Dense:</strong> {item.pct_moderate}%</p>
+                )}
+                <p style="margin: 0; font-size: 14px;"><strong>Density:</strong> <span style="text-transform: capitalize;">{item.density}</span></p>
+              </div>
+            </Popup>
+          </CircleMarker>
+        ))}
       </MapContainer>
     </div>
   );
