@@ -12,17 +12,17 @@ import { useMemo } from "react";
 
 const threatFrequencyData = [
   { month: 'Jan', alerts: 45 },
-  { month: 'Feb', 'Low Alerts / All Alerts': 55 },
-  { month: 'Mar', 'Low Alerts / All Alerts': 50 },
-  { month: 'Apr', 'Low Alerts / All Alerts': 80 },
-  { month: 'May', 'Low Alerts / All Alerts': 60 },
-  { month: 'Jun', 'Low Alerts / All Alerts': 40 },
-  { month: 'Jul', 'Low Alerts / All Alerts': 95 },
-  { month: 'Aug', 'Low Alerts / All Alerts': 52 },
-  { month: 'Sep', 'Low Alerts / All Alerts': 20 },
-  { month: 'Oct', 'Low Alerts / All Alerts': 15 },
-  { month: 'Nov', 'Low Alerts / All Alerts': 10 },
-  { month: 'Dec', 'Low Alerts / All Alerts': 18 },
+  { month: 'Feb', alerts: 55 },
+  { month: 'Mar', alerts: 50 },
+  { month: 'Apr', alerts: 80 },
+  { month: 'May', alerts: 60 },
+  { month: 'Jun', alerts: 40 },
+  { month: 'Jul', alerts: 95 },
+  { month: 'Aug', alerts: 52 },
+  { month: 'Sep', alerts: 20 },
+  { month: 'Oct', alerts: 15 },
+  { month: 'Nov', alerts: 10 },
+  { month: 'Dec', alerts: 18 },
 ];
 
 const threatTypeData = [
@@ -58,9 +58,9 @@ export function DataVisualization() {
   return (
     <div className="p-4 md:p-6 space-y-6">
         <h1 className="text-3xl font-bold">Data Visualization</h1>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Left Column */}
-            <div className="lg:col-span-1 flex flex-col gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            {/* Left Sidebar */}
+            <aside className="lg:col-span-1 flex flex-col gap-6">
                 <Card>
                     <CardHeader>
                         <CardTitle>Date Range</CardTitle>
@@ -123,10 +123,10 @@ export function DataVisualization() {
                         </ResponsiveContainer>
                     </CardContent>
                 </Card>
-            </div>
+            </aside>
             
-            {/* Right Column */}
-            <div className="lg:col-span-2 flex flex-col gap-6">
+            {/* Main Content */}
+            <main className="lg:col-span-3 flex flex-col gap-6">
                  <Card>
                     <CardHeader>
                         <CardTitle>Threat Frequency by Month</CardTitle>
@@ -142,7 +142,7 @@ export function DataVisualization() {
                                     cursor={{fill: 'hsl(var(--muted) / 0.3)'}}
                                 />
                                 <Legend iconType="square" iconSize={10} />
-                                <Bar dataKey="Low Alerts / All Alerts" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
+                                <Bar dataKey="alerts" fill="hsl(var(--primary))" name="Alerts" radius={[4, 4, 0, 0]} />
                             </BarChart>
                         </ResponsiveContainer>
                     </CardContent>
@@ -155,10 +155,8 @@ export function DataVisualization() {
                         <LeafletMap />
                     </CardContent>
                 </Card>
-            </div>
+            </main>
         </div>
     </div>
   );
 }
-
-    
