@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Menu, Home, Bell, Map, Award, BookOpen, BarChart } from "lucide-react";
 
-export default function DashboardLayout({
+export default function AwarenessLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -27,7 +27,7 @@ export default function DashboardLayout({
 
   return (
     <SidebarProvider>
-      <div className="flex h-screen">
+      <div className="flex h-screen bg-background">
         {/* Sidebar */}
         <Sidebar>
           <SidebarContent>
@@ -112,7 +112,7 @@ export default function DashboardLayout({
         </Sidebar>
 
         {/* Main content */}
-        <main className="flex-1 p-4">{children}</main>
+        <main className="flex-1 overflow-y-auto">{children}</main>
       </div>
     </SidebarProvider>
   );
