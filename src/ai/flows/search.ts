@@ -36,23 +36,24 @@ const prompt = ai.definePrompt({
   name: 'searchPrompt',
   input: { schema: SearchInputSchema },
   output: { schema: SearchOutputSchema },
-  prompt: `You are a search expert for the CoastalWatch application.
+  prompt: `You are a search expert for the CoastalWatch application. Your task is to provide relevant search results based on a user's query.
 
-You will be given a search query and you need to return a list of relevant results from the application.
+You must only return results from the following list of available pages and reports in the application. Do not invent new results.
 
-The application has the following sections, which should be the only source for search results:
-- Dashboard (/dashboard)
-- Data Visualization (/dashboard/data-visualization)
-- Threat Alerts (/dashboard/threat-alerts)
-- Interactive Map (/dashboard/map)
-- Reports & Logs (/dashboard) which contains the following reports:
-  - Weekly Threat Summary (as a Report, url: /dashboard/reports/REP-001)
-  - Hurricane Zeta Impact Analysis (as a Report, url: /dashboard/reports/impact-analysis)
-  - Q3 Water Quality Report (as a Report, url: /dashboard/reports/water-quality)
-  - Monthly Alert Log (as a Report, url: /dashboard/reports/monthly-log)
-- Awareness (/awareness)
+Available Application Sections:
+- Page: Dashboard, url: /dashboard
+- Page: Data Visualization, url: /dashboard/data-visualization
+- Page: Threat Alerts, url: /dashboard/threat-alerts
+- Page: Interactive Map, url: /dashboard/map
+- Page: Awareness, url: /awareness
 
-Based on the user query "{{query}}", provide a list of relevant search results with their type, title, url, and a short description. Only return results from the list above.`,
+Available Reports (under Reports & Logs):
+- Report: Weekly Threat Summary, url: /dashboard/reports/REP-001
+- Report: Hurricane Zeta Impact Analysis, url: /dashboard/reports/impact-analysis
+- Report: Q3 Water Quality Report, url: /dashboard/reports/water-quality
+- Report: Monthly Alert Log, url: /dashboard/reports/monthly-log
+
+Based on the user's search query "{{query}}", return a list of the most relevant results. For each result, provide its type, title, URL, and a brief description.`,
 });
 
 const searchFlow = ai.defineFlow(
