@@ -1,6 +1,6 @@
 # 🌊 Coastal Threat Alert System
 
-An AI-powered early warning and alert platform to protect coastal communities and ecosystems from threats such as storm surges, sea-level rise, illegal dumping, algal blooms, and cyclones. Built during **\[Hackathon Name]**.
+An AI-powered early warning and alert platform to protect coastal communities and ecosystems from threats such as storm surges, sea-level rise, illegal dumping, algal blooms, and cyclones. Built during **\[HackOut-25(DA-IICT)]**.
 
 ---
 
@@ -28,6 +28,3 @@ An AI-powered early warning and alert platform to protect coastal communities an
 * **Frontend:** React, D3.js, Tailwind CSS
 * **Notifications:** Twilio, Firebase
 * **Cloud:** AWS / GCP
-
-
-👉 Would you like me to also create a **short one-line GitHub description + tags** (so it looks perfect in the repo sidebar/search)?
